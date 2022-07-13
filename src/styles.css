@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~normalize.css';
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.xxl-text {
+    font-size: 3rem;
+}
+.xl-text {
+    font-size: 2rem;
+}
+.lg-text {
+    font-size: 1.5rem;
+}
+

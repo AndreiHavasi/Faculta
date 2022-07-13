@@ -1,0 +1,63 @@
+<div class="container">
+    <form class="mt-5">
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="pick-location">Locatia preluarii</label>
+                <select class="form-control form-select" id="pick-location"
+                        [(ngModel)]="model.pickLocation" name="pickLocation">
+                    <option *ngFor="let location of locations" [value]="location">{{location}}</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="pick-time">Ora preluarii</label>
+                <select class="form-control form-select" id="pick-time"
+                        [(ngModel)]="model.pickTime" name="pickTime">
+                    <option *ngFor="let time of times" [value]="time">{{time}}</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label [for]="pickPicker">Data preluarii</label>
+                <mat-form-field class="form-control">
+                    <mat-label>Alege data</mat-label>
+                    <input matInput [matDatepicker]="pickPicker" [formControl]="date1"
+                            [ngModel]="model.pickDate" name="pickDate">
+                    <mat-hint>ZZ/LL/AA</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="pickPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #pickPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="form-group col-sm-4">
+                <label for="leave-location">Locatia predarii</label>
+                <select class="form-control form-select" id="leave-location"
+                        [(ngModel)]="model.leaveLocation" name="leaveLocation">
+                    <option *ngFor="let location of locations" [value]="location">{{location}}</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="leave-time">Ora predarii</label>
+                <select class="form-control form-select" id="leave-time"
+                        [(ngModel)]="model.leaveTime" name="leaveTime">
+                    <option *ngFor="let time of times" [value]="time">{{time}}</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label [for]="leavePicker">Data predarii</label>
+                <mat-form-field class="form-control">
+                    <mat-label>Alege data</mat-label>
+                    <input matInput [matDatepicker]="leavePicker" [formControl]="date2"
+                           [(ngModel)]="model.leaveDate" name="leaveDate">
+                    <mat-hint>ZZ/LL/AA</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="leavePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #leavePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="mt-5">
+{{model | json}}
+</div>
+
