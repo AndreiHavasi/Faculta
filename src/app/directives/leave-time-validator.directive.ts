@@ -1,5 +1,5 @@
-import { Validator, NG_VALIDATORS, FormControl } from "@angular/forms";
-import { Directive, Input } from '@angular/core';
+import {Validator, NG_VALIDATORS, FormControl} from "@angular/forms";
+import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Directive({
   selector: '[appLeaveTimeValidator]',
@@ -7,11 +7,13 @@ import { Directive, Input } from '@angular/core';
     { provide: NG_VALIDATORS, useExisting: LeaveTimeValidatorDirective, multi: true}
   ]
 })
-export class LeaveTimeValidatorDirective implements Validator {
+export class LeaveTimeValidatorDirective implements Validator, OnChanges {
 
   @Input() pickTime: string = '';
   @Input() pickDate: Date = new Date();
   @Input() leaveDate: Date = new Date();
+
+  private onChange?: () => void;
 
   constructor() { }
 
@@ -22,9 +24,17 @@ export class LeaveTimeValidatorDirective implements Validator {
     if(this.pickTime >= leaveTime && this.dateCheck()) {
       return {'leave-time-validator': true, 'requiredValue': [this.pickTime, this.pickDate, this.leaveDate]}
     }
-
     return null;
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if('pickTime' in changes && this.onChange) {
+      this.onChange();
+    }
+  }
+
+  registerOnValidatorChange(fn: () => void): void {
+    this.onChange = fn;
   }
 
   dateCheck(): boolean {

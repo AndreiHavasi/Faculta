@@ -12,8 +12,7 @@
             <div class="form-group col-sm-4">
                 <label for="pick-time">Ora preluarii</label>
                 <select class="form-control form-select" id="pick-time"
-                        [(ngModel)]="model.pickTime" name="pickTime" #pickTime="ngModel"
-                        (ngModelChange) = "leaveTime.control.updateValueAndValidity()"
+                        [(ngModel)]="model.pickTime" name="pickTime"
                         appPickTimeValidator
                         [leaveTime]="model.leaveTime" [pickDate]="model.pickDate" [leaveDate]="model.leaveDate">
                     <option *ngFor="let time of times" [value]="time">{{time}}</option>
@@ -44,9 +43,8 @@
             <div class="form-group col-sm-4">
                 <label for="leave-time">Ora predarii</label>
                 <select class="form-control form-select" id="leave-time"
-                        [(ngModel)]="model.leaveTime" name="leaveTime" #leaveTime="ngModel"
+                        [(ngModel)]="model.leaveTime" name="leaveTime"
                         appLeaveTimeValidator
-                        (ngModelChange) = "pickTime.control.updateValueAndValidity()"
                         [pickTime]="model.pickTime" [pickDate]="model.pickDate" [leaveDate]="model.leaveDate">
                     <option *ngFor="let time of times" [value]="time">{{time}}</option>
                 </select>
