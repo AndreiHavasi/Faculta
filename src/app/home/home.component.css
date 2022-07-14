@@ -1,3 +1,7 @@
 select {
     height: 5rem;
 }
+button {
+    height: 5rem;
+    width: 10rem;
+}

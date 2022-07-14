@@ -5,6 +5,8 @@ export class RentalOrder {
     public pickDate: Date,
     public leaveDate: Date,
     public pickTime: string,
-    public leaveTime: string
+    public leaveTime: string,
+    public id?: number,
+    public description?: string
   ) { }
 }
