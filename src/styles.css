@@ -4,12 +4,18 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .xxl-text {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 .xl-text {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 .lg-text {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
+}
+.md-text {
+  font-size: 1.25rem;
+}
+.no-padding {
+  padding: 0;
 }
 

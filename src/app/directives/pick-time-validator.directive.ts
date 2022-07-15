@@ -30,7 +30,7 @@ export class PickTimeValidatorDirective implements Validator, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if('leaveTime' in changes && this.onChange) {
+    if(('leaveTime' in changes || 'pickDate' in changes || 'leaveDate' in changes) && this.onChange) {
       this.onChange();
     }
   }

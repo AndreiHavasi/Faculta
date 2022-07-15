@@ -1,6 +1,9 @@
 select {
     height: 5rem;
 }
+.ng-invalid:not(form)  {
+    background-color: #f8d7da;
+}
 button {
     height: 5rem;
     width: 10rem;

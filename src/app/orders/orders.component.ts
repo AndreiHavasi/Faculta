@@ -11,7 +11,6 @@ export class OrdersComponent implements OnInit {
 
   orders: RentalOrder[] = [];
 
-
   constructor(
     private orderService: OrderService
   ) { }

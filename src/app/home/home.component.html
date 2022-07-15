@@ -1,72 +1,75 @@
 <div class="container">
-    <form class="mt-5"
-          (ngSubmit)="onSubmit(model)" #orderForm="ngForm">
-        <div class="row">
-            <div class="form-group col-sm-4">
-                <label for="pick-location">Locatia preluarii</label>
-                <select class="form-control form-select" id="pick-location"
-                        [(ngModel)]="model.pickLocation" name="pickLocation">
-                    <option *ngFor="let location of locations" [value]="location">{{location}}</option>
-                </select>
-            </div>
-            <div class="form-group col-sm-4">
-                <label for="pick-time">Ora preluarii</label>
-                <select class="form-control form-select" id="pick-time"
-                        [(ngModel)]="model.pickTime" name="pickTime"
-                        appPickTimeValidator
-                        [leaveTime]="model.leaveTime" [pickDate]="model.pickDate" [leaveDate]="model.leaveDate">
-                    <option *ngFor="let time of times" [value]="time">{{time}}</option>
-                </select>
-            </div>
-            <div class="form-group col-sm-4">
-                <label [for]="pickPicker">Data preluarii</label>
-                <mat-form-field class="form-control">
-                    <mat-label>Alege data</mat-label>
-                    <!-- webstorm / wrong error -->
-                    <input matInput [matDatepicker]="pickPicker" [min]="today"
-                            [(ngModel)]="model.pickDate" name="pickDate"
-                            (ngModelChange)="changeLeaveDate()">
-                    <mat-hint>ZZ/LL/AAAA</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="pickPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #pickPicker ></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="form-group col-sm-4">
-                <label for="leave-location">Locatia predarii</label>
-                <select class="form-control form-select" id="leave-location"
-                        [(ngModel)]="model.leaveLocation" name="leaveLocation">
-                    <option *ngFor="let location of locations" [value]="location">{{location}}</option>
-                </select>
-            </div>
-            <div class="form-group col-sm-4">
-                <label for="leave-time">Ora predarii</label>
-                <select class="form-control form-select" id="leave-time"
-                        [(ngModel)]="model.leaveTime" name="leaveTime"
-                        appLeaveTimeValidator
-                        [pickTime]="model.pickTime" [pickDate]="model.pickDate" [leaveDate]="model.leaveDate">
-                    <option *ngFor="let time of times" [value]="time">{{time}}</option>
-                </select>
-            </div>
-            <div class="form-group col-sm-4">
-                <label [for]="leavePicker">Data predarii</label>
-                <mat-form-field class="form-control">
-                    <mat-label>Alege data</mat-label>
-                    <!-- webstorm / wrong error -->
-                    <input matInput [matDatepicker]="leavePicker" [min]="model.pickDate"
-                           [(ngModel)]="model.leaveDate" name="leaveDate">
-                    <mat-hint>ZZ/LL/AAAA</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="leavePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #leavePicker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
+  <form class="mt-5"
+        (ngSubmit)="onSubmit(model)" #orderForm="ngForm">
+    <div class="row">
+      <div class="form-group col-sm-4">
+        <label for="pick-location">Locatia preluarii</label>
+        <select class="form-control form-select" id="pick-location"
+                [(ngModel)]="model.pickLocation" name="pickLocation">
+          <option *ngFor="let location of locations" [value]="location">{{location}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="pick-time">Ora preluarii</label>
+          <select class="form-control form-select" id="pick-time"
+                  [(ngModel)]="model.pickTime" name="pickTime"
+                  appPickTimeValidator
+                  [leaveTime]="model.leaveTime" [pickDate]="model.pickDate" [leaveDate]="model.leaveDate">
+            <option *ngFor="let time of times" [value]="time">{{time}}</option>
+          </select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label [for]="pickPicker">Data preluarii</label>
+        <mat-form-field class="form-control">
+          <mat-label>Alege data</mat-label>
+          <!-- webstorm / wrong error -->
+          <input matInput [matDatepicker]="pickPicker" [min]="today"
+                 [(ngModel)]="model.pickDate" name="pickDate"
+                 (ngModelChange)="changeLeaveDate()">
+          <mat-hint>ZZ/LL/AAAA</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="pickPicker"></mat-datepicker-toggle>
+          <mat-datepicker #pickPicker ></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="form-group col-sm-4">
+        <label for="leave-location">Locatia predarii</label>
+        <select class="form-control form-select" id="leave-location"
+                [(ngModel)]="model.leaveLocation" name="leaveLocation">
+          <option *ngFor="let location of locations" [value]="location">{{location}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="leave-time">Ora predarii</label>
+        <select class="form-control form-select" id="leave-time"
+                [(ngModel)]="model.leaveTime" name="leaveTime"
+                appLeaveTimeValidator
+                [pickTime]="model.pickTime" [pickDate]="model.pickDate" [leaveDate]="model.leaveDate">
+          <option *ngFor="let time of times" [value]="time">{{time}}</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-4">
+        <label [for]="leavePicker">Data predarii</label>
+        <mat-form-field class="form-control">
+          <mat-label>Alege data</mat-label>
+          <!-- webstorm / wrong error -->
+          <input matInput [matDatepicker]="leavePicker" [min]="model.pickDate"
+                 [(ngModel)]="model.leaveDate" name="leaveDate">
+          <mat-hint>ZZ/LL/AAAA</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="leavePicker"></mat-datepicker-toggle>
+          <mat-datepicker #leavePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div [hidden]="orderForm.form.valid" class="alert alert-danger mt-5 lg-text">Eroare la ore!</div>
 
-        <button type="submit" class="btn btn-primary mt-5 lg-text" [disabled]="!orderForm.form.valid">Cauta</button>
-    </form>
+    <button type="submit" class="btn btn-primary mt-5 lg-text" [disabled]="!orderForm.form.valid">Cauta</button>
+  </form>
+
+  <div class="mt-5">
+    {{model | json}}
+  </div>
 </div>
 
-<div class="mt-5">
-{{model | json}}
-</div>
+<app-cars></app-cars>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RentalOrder } from "../rental-order";
 import { OrderService } from "../services/order.service";
-
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -22,7 +22,8 @@ export class HomeComponent implements OnInit {
     '08:00', '21:00')
 
   constructor(
-    private orderService: OrderService
+    private orderService: OrderService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +38,10 @@ export class HomeComponent implements OnInit {
     this.orderService.postOrder(order).subscribe(order => {
       this.orders.push(order);
     });
+    this.navigateToChoose();
   }
 
+  navigateToChoose() {
+    this.router.navigateByUrl('/choose');
+  }
 }

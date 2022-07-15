@@ -28,7 +28,7 @@ export class LeaveTimeValidatorDirective implements Validator, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if('pickTime' in changes && this.onChange) {
+    if(('pickTime' in changes || 'pickDate' in changes || 'leaveDate' in changes) && this.onChange) {
       this.onChange();
     }
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from "angular-in-memory-web-api";
 import { RentalOrder } from "../rental-order";
+import { Car } from "../car";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,12 @@ export class InMemoryDataService implements InMemoryDbService {
         leaveDate: new Date(new Date(new Date().setDate(new Date().getDate() + 1)).setHours(new Date().getHours()+3)),
         pickTime: '08:00', leaveTime: '21:00', id: 0, description: 'mock order for id initialization'}
     ];
-    return {orders};
+    const cars: Car[] = [
+      { name: 'matiz', url: '../assets/images/matiz.jpg', id: 1},
+      { name: 'tigaie', url: '../assets/images/bmw.jpg', id: 2},
+      { name: 'cls', url: '../assets/images/cls.jpg', id: 3}
+    ];
+    return {orders, cars};
   }
 
   constructor() { }

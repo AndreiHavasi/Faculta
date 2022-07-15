@@ -18,6 +18,8 @@ import { OrdersComponent } from "./orders/orders.component";
 import { InMemoryDataService } from './services/in-memory-data.service';
 import { LeaveTimeValidatorDirective } from './directives/leave-time-validator.directive';
 import { PickTimeValidatorDirective } from './directives/pick-time-validator.directive';
+import { CarsComponent } from './cars/cars.component';
+import { ChooseComponent } from './choose/choose.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { PickTimeValidatorDirective } from './directives/pick-time-validator.dir
     ContactComponent,
     OrdersComponent,
     LeaveTimeValidatorDirective,
-    PickTimeValidatorDirective
+    PickTimeValidatorDirective,
+    CarsComponent,
+    ChooseComponent
   ],
   imports: [
     CommonModule,

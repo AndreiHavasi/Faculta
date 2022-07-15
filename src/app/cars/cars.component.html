@@ -1,0 +1,9 @@
+<div class="container">
+  <h1 class="xxl-text text-center">Masinile noastre</h1>
+  <div class="row mb-5">
+    <div *ngFor="let car of cars" class="col-sm-4">
+      <img class="w-100" [alt]="car.name" [src]="car.url">
+      <div class="car-details md-text text-uppercase text-center pt-3 pb-3 mb-5">{{car.name}}</div>
+    </div>
+  </div>
+</div>
