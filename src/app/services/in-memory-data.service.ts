@@ -14,9 +14,9 @@ export class InMemoryDataService implements InMemoryDbService {
         pickTime: '08:00', leaveTime: '21:00', id: 0, description: 'mock order for id initialization'}
     ];
     const cars: Car[] = [
-      { name: 'matiz', url: '../assets/images/matiz.jpg', id: 1},
-      { name: 'tigaie', url: '../assets/images/bmw.jpg', id: 2},
-      { name: 'cls', url: '../assets/images/cls.jpg', id: 3}
+      { name: 'matiz', url: '../assets/images/matiz.jpg', id: 1, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []},
+      { name: 'tigaie', url: '../assets/images/bmw.jpg', id: 2, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []},
+      { name: 'cls', url: '../assets/images/cls.jpg', id: 3, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []}
     ];
     return {orders, cars};
   }

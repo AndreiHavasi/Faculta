@@ -22,7 +22,7 @@ export class ChooseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // not good if a lot of orders, 2 requests depending on each other
+    //TODO: not good if a lot of orders, 2 requests depending on each other
     this.getOrders();
     this.getCars();
   }
@@ -41,17 +41,18 @@ export class ChooseComponent implements OnInit {
     const lastOrder: RentalOrder = (this.orders)[this.orders.length - 1];
     if(typeof car.pickDate !== undefined)
       //@ts-ignore car.pickDate / car.leaveDate possibly undefined
-      if(car.pickDate <= lastOrder.leaveDate && car.leaveDate >= lastOrder.pickDate)
-        return false;
+      for(let i = 0; i < car.pickDate.length; i ++)
+        if(car.pickDate[i] <= lastOrder.leaveDate && car.leaveDate[i] >= lastOrder.pickDate)
+          return false;
     return true;
   }
 
   rentCar(car: Car) {
     const lastOrder: RentalOrder = (this.orders)[this.orders.length - 1];
-    car.pickDate = lastOrder.pickDate;
-    car.leaveDate = lastOrder.leaveDate;
-    car.pickTime = lastOrder.pickLocation;
-    car.leaveTime = lastOrder.pickTime;
+    car.pickDate.push(lastOrder.pickDate);
+    car.leaveDate.push(lastOrder.leaveDate);
+    car.pickTime.push(lastOrder.pickLocation);
+    car.leaveTime.push(lastOrder.pickTime);
 
     this.carService.postCar(car).subscribe(() => this.navigateToHome());
   }
