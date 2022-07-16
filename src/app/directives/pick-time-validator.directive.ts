@@ -19,7 +19,7 @@ export class PickTimeValidatorDirective implements Validator, OnChanges {
 
   validate(control: FormControl) {
 
-    let pickTime: string = control.value;
+    const pickTime: string = control.value;
 
     if(this.leaveTime <= pickTime && this.dateCheck()) {
       return {'pick-time-validator': true, 'requiredValue': [this.leaveTime, this.pickDate, this.leaveDate]}

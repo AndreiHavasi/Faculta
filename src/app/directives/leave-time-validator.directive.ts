@@ -19,7 +19,7 @@ export class LeaveTimeValidatorDirective implements Validator, OnChanges {
 
   validate(control: FormControl) {
 
-    let leaveTime: string = control.value;
+    const leaveTime: string = control.value;
 
     if(this.pickTime >= leaveTime && this.dateCheck()) {
       return {'leave-time-validator': true, 'requiredValue': [this.pickTime, this.pickDate, this.leaveDate]}

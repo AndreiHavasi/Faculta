@@ -40,7 +40,6 @@ export class ChooseComponent implements OnInit {
   private isCarAvailable(car: Car): boolean {
     const lastOrder: RentalOrder = (this.orders)[this.orders.length - 1];
     if(typeof car.pickDate !== undefined)
-      //@ts-ignore car.pickDate / car.leaveDate possibly undefined
       for(let i = 0; i < car.pickDate.length; i ++)
         if(car.pickDate[i] <= lastOrder.leaveDate && car.leaveDate[i] >= lastOrder.pickDate)
           return false;
