@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CarService } from "../services/car.service";
-import { OrderService } from "../services/order.service";
-import { RentalOrder } from "../rental-order";
-import { Car } from "../car";
-import { Router } from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {CarService} from "../services/car.service";
+import {OrderService} from "../services/order.service";
+import {RentalOrder} from "../rental-order";
+import {Car} from "../car";
+import {Router} from "@angular/router";
+import {combineLatest, Observable} from "rxjs";
 
 @Component({
   selector: 'app-choose',
@@ -22,19 +23,23 @@ export class ChooseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //TODO: not good if a lot of orders, 2 requests depending on each other
-    this.getOrders();
-    this.getCars();
+    combineLatest([
+      this.getCars(),
+      this.getOrders()
+    ])
+      .subscribe(value => {
+        const cars: Car[] = value[0];
+        this.orders = value[1];
+        this.availableCars = cars.filter(car => this.isCarAvailable(car));
+      });
   }
 
-  private getCars(): void {
-    this.carService.getCars().subscribe(cars => {
-      this.availableCars = cars.filter(car => this.isCarAvailable(car));
-    });
+  private getCars(): Observable<Car[]> {
+    return this.carService.getCars();
   }
 
-  private getOrders(): void {
-    this.orderService.getOrders().subscribe(orders => this.orders = orders);
+  private getOrders(): Observable<RentalOrder[]> {
+    return this.orderService.getOrders();
   }
 
   private isCarAvailable(car: Car): boolean {
