@@ -1,3 +1,9 @@
+mat-progress-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .car-details {
   background-color: #0d6efd;
 }

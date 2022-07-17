@@ -6,7 +6,7 @@ import { RouterModule } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
 
 import { AppComponent } from './app.component';
@@ -20,6 +20,7 @@ import { LeaveTimeValidatorDirective } from './directives/leave-time-validator.d
 import { PickTimeValidatorDirective } from './directives/pick-time-validator.directive';
 import { CarsComponent } from './cars/cars.component';
 import { ChooseComponent } from './choose/choose.component';
+import { NetworkInterceptor } from "./services/network.interceptor";
 
 
 @NgModule({
@@ -46,11 +47,13 @@ import { ChooseComponent } from './choose/choose.component';
     // mock server api
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService
-    //? {dataEncapsulation: false}
     )
 
   ],
-  providers: [ {provide: LOCALE_ID, useValue: 'ro'}],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'ro'},
+    {provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

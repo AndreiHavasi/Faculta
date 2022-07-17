@@ -5,6 +5,7 @@ import {RentalOrder} from "../rental-order";
 import {Car} from "../car";
 import {Router} from "@angular/router";
 import {combineLatest, Observable} from "rxjs";
+import { LoadingService } from "../services/loading.service";
 
 @Component({
   selector: 'app-choose',
@@ -13,10 +14,13 @@ import {combineLatest, Observable} from "rxjs";
 })
 export class ChooseComponent implements OnInit {
 
+  loading$ = this.loadingService.loading$;
+
   availableCars: Car[] = [];
   orders: RentalOrder[] = [];
 
   constructor(
+    private loadingService: LoadingService,
     private carService: CarService,
     private orderService: OrderService,
     private router: Router
