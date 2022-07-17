@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from "../services/car.service";
 import { Car } from "../car";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: 'app-cars',
@@ -9,6 +10,7 @@ import { Car } from "../car";
 })
 export class CarsComponent implements OnInit {
 
+  componentDestroyed$: Subject<boolean> = new Subject();
   cars: Car[] = [];
 
   constructor(
@@ -19,8 +21,15 @@ export class CarsComponent implements OnInit {
     this.getCars();
   }
 
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
+  }
+
   private getCars(): void {
-    this.carService.getCars().subscribe(cars => this.cars = cars);
+    this.carService.getCars()
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(cars => this.cars = cars);
   }
 
 }

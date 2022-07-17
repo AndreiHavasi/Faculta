@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from "../services/order.service";
 import { RentalOrder } from "../rental-order";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: 'app-about',
@@ -8,6 +9,8 @@ import { RentalOrder } from "../rental-order";
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
+
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   orders: RentalOrder[] = [];
 
@@ -19,7 +22,14 @@ export class OrdersComponent implements OnInit {
     this.getOrders();
   }
 
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
+  }
+
   private getOrders(): void {
-    this.orderService.getOrders().subscribe(orders => this.orders = orders);
+    this.orderService.getOrders()
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(orders => this.orders = orders);
   }
 }

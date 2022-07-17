@@ -4,7 +4,7 @@ import {OrderService} from "../services/order.service";
 import {RentalOrder} from "../rental-order";
 import {Car} from "../car";
 import {Router} from "@angular/router";
-import {combineLatest, Observable} from "rxjs";
+import { combineLatest, Observable, Subject, takeUntil } from "rxjs";
 import { LoadingService } from "../services/loading.service";
 
 @Component({
@@ -15,6 +15,7 @@ import { LoadingService } from "../services/loading.service";
 export class ChooseComponent implements OnInit {
 
   loading$ = this.loadingService.loading$;
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   availableCars: Car[] = [];
   orders: RentalOrder[] = [];
@@ -31,12 +32,19 @@ export class ChooseComponent implements OnInit {
       this.getCars(),
       this.getOrders()
     ])
+      .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(value => {
         const cars: Car[] = value[0];
         this.orders = value[1];
         this.availableCars = cars.filter(car => this.isCarAvailable(car));
       });
   }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
+  }
+
 
   private getCars(): Observable<Car[]> {
     return this.carService.getCars();
