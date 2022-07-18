@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AccountService } from "../services/account.service";
 import { Account } from "../account";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,8 @@ import { Account } from "../account";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   public loginForm!: FormGroup;
   public submitted = false;
@@ -51,20 +54,20 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
+    let account: Account = new Account(this.formControl['username'].value, this.formControl['password'].value, true);
 
     if(this.loginForm.valid) {
-      this.login();
-      this.navigateToHome();
+      this.login(account);
     }
     else {
       console.log('oof la login');
     }
   }
 
-  login(): void {
-    let account: Account = new Account(this.formControl['username'].value, this.formControl['password'].value, true);
-    console.log(account);
-    this.accountService.postAccount(account);
+  login(account: Account): void {
+    this.accountService.postAccount(account)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(() => this.navigateToHome());
   }
 
   navigateToHome() {

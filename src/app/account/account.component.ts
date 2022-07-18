@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from "../services/account.service";
 import { Account } from "../account";
-import { combineLatest, first, Observable, Subject } from "rxjs";
+import { first, Subject } from "rxjs";
 
 @Component({
   selector: 'app-account',
@@ -10,8 +10,7 @@ import { combineLatest, first, Observable, Subject } from "rxjs";
 })
 export class AccountComponent implements OnInit {
 
-  componentDestroyed$: Subject<boolean> = new Subject();
-  accounts: Account[] = [];
+  account: Account = new Account('','',true);
 
   constructor(
     private accountService: AccountService
@@ -21,23 +20,20 @@ export class AccountComponent implements OnInit {
     this.getLoggedInAccount();
   }
 
-  ngOnDestroy(): void {
-    this.componentDestroyed$.next(true);
-    this.componentDestroyed$.complete();
-  }
-
-  private getLoggedInAccount() {
+  private getLoggedInAccount(): void {
     let loggedInAccount: Account;
     this.accountService.getAccounts()
-      .pipe()
+      .pipe(first())
       .subscribe(accounts => {
-          console.log(accounts);
-          this.accounts = accounts.filter(account => this.isAccountLoggedIn(account))
-        }
+          loggedInAccount = (accounts.filter(account => AccountComponent.isAccountLoggedIn(account)))[0];
+        },
+        error => {},
+        () => this.account = new Account(loggedInAccount.username, loggedInAccount.password,
+          loggedInAccount.loggedIn, loggedInAccount.id)
       );
   }
 
-  private isAccountLoggedIn(account: Account) : boolean {
+  private static isAccountLoggedIn(account: Account) : boolean {
     return account.loggedIn;
   }
 

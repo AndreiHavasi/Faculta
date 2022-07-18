@@ -71,7 +71,7 @@ export class ChooseComponent implements OnInit {
     car.pickTime.push(lastOrder.pickLocation);
     car.leaveTime.push(lastOrder.pickTime);
 
-    this.carService.postCar(car).subscribe(() => this.navigateToHome());
+    this.carService.putCar(car).subscribe(() => this.navigateToHome());
   }
 
   navigateToHome() {

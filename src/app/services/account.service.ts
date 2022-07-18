@@ -27,10 +27,10 @@ export class AccountService {
       )
   }
 
-  /** POST: send order to mock server */
+  /** POST: send account to mock server */
   postAccount(account: Account): Observable<Account> {
     return this.http.post<Account>(this.accountsUrl, account, this.httpOptions).pipe(
-      tap((newAccount: Account) => console.log(`posted account with pick time=${newAccount.id}`)),
+      tap((newAccount: Account) => console.log(`posted account with id=${newAccount.id}`)),
       catchError(this.handleError<Account>('postAccount'))
     );
   }
