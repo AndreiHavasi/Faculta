@@ -64,13 +64,14 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(account: Account): void {
+  private login(account: Account): void {
     this.accountService.postAccount(account)
-      .pipe(takeUntil(this.componentDestroyed$))
+      .pipe
+      (takeUntil(this.componentDestroyed$))
       .subscribe(() => this.navigateToHome());
   }
 
-  navigateToHome() {
+  private navigateToHome() {
     this.router.navigateByUrl('/home');
   }
 

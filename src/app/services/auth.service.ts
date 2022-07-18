@@ -1,23 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from "../services/account.service";
+import { Injectable } from '@angular/core';
+import { AccountService } from "./account.service";
 import { Account } from "../account";
 import { first } from "rxjs";
 
-@Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
-})
-export class AccountComponent implements OnInit {
 
-  account: Account = new Account('','',true);
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  account: Account = new Account('','',false);
 
   constructor(
     private accountService: AccountService
   ) { }
 
-  ngOnInit(): void {
+  public isAuthenticated(): boolean {
     this.getLoggedInAccount();
+    return this.account.loggedIn;
   }
 
   private getLoggedInAccount(): void {
@@ -32,5 +32,4 @@ export class AccountComponent implements OnInit {
           loggedInAccount.loggedIn, loggedInAccount.id)
       );
   }
-
 }

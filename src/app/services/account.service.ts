@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Account } from "../account";
-import { Observable, of } from "rxjs";
+import { first, Observable, of } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 
 @Injectable({
@@ -40,5 +40,9 @@ export class AccountService {
       console.log(error);
       return of(result as T);
     }
+  }
+
+  public static isAccountLoggedIn(account: Account) : boolean {
+    return account.loggedIn;
   }
 }
