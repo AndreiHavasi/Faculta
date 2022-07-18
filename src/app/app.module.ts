@@ -3,7 +3,7 @@ import { CommonModule} from "@angular/common";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
@@ -20,7 +20,9 @@ import { LeaveTimeValidatorDirective } from './directives/leave-time-validator.d
 import { PickTimeValidatorDirective } from './directives/pick-time-validator.directive';
 import { CarsComponent } from './cars/cars.component';
 import { ChooseComponent } from './choose/choose.component';
+import { LoginComponent } from './login/login.component';
 import { NetworkInterceptor } from "./services/network.interceptor";
+import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { NetworkInterceptor } from "./services/network.interceptor";
     LeaveTimeValidatorDirective,
     PickTimeValidatorDirective,
     CarsComponent,
-    ChooseComponent
+    ChooseComponent,
+    LoginComponent,
+    AccountComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +51,8 @@ import { NetworkInterceptor } from "./services/network.interceptor";
     // mock server api
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService
-    )
+    ),
+    ReactiveFormsModule
 
   ],
   providers: [

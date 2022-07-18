@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {CarService} from "../services/car.service";
-import {OrderService} from "../services/order.service";
-import {RentalOrder} from "../rental-order";
-import {Car} from "../car";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { CarService } from "../services/car.service";
+import { OrderService } from "../services/order.service";
+import { RentalOrder } from "../rental-order";
+import { Car } from "../car";
+import { Router } from "@angular/router";
 import { combineLatest, Observable, Subject, takeUntil } from "rxjs";
 import { LoadingService } from "../services/loading.service";
 
@@ -28,6 +28,7 @@ export class ChooseComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     combineLatest([
       this.getCars(),
       this.getOrders()
@@ -37,14 +38,14 @@ export class ChooseComponent implements OnInit {
         const cars: Car[] = value[0];
         this.orders = value[1];
         this.availableCars = cars.filter(car => this.isCarAvailable(car));
-      });
+        });
+
   }
 
   ngOnDestroy(): void {
     this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
   }
-
 
   private getCars(): Observable<Car[]> {
     return this.carService.getCars();

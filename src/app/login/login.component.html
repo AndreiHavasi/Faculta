@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row d-flex justify-content-center mt-5">
+    <form class="card col-sm-4 md-text" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h1 class="w-75 ms-auto me-auto">Login</h1>
+
+      <div class="form-group w-75 ms-auto me-auto">
+        <label>Nume utilizator</label>
+        <input type="text" class="form-control" id="username"
+               formControlName="username">
+        <div *ngIf="submitted && formControl['username'].errors" class="alert alert-danger">
+          <div *ngIf="formControl['username'].errors['required']">N-ai username?</div>
+          <div *ngIf="formControl['username'].errors['pattern']">
+            Username tre sa aibe:
+            <ul>
+              <li>doar litere</li>
+              <li>intre 3 si 13 caractere</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mt-3 w-75 ms-auto me-auto">
+        <label>Parola</label>
+        <input type="password" class="form-control" id="password"
+               formControlName="password">
+        <div *ngIf="submitted && formControl['password'].errors" class="alert alert-danger">
+          <div *ngIf="formControl['password'].errors['required']">Baga parola</div>
+          <div *ngIf="formControl['password'].errors['pattern']">
+            Parola tre sa aibe macar:
+            <ul>
+              <li>o litera mica</li>
+              <li>o litera mare</li>
+              <li>o cifra</li>
+              <li>10 caractere</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary mt-5 mb-5 lg-text w-50 ms-auto me-auto">Login</button>
+    </form>
+  </div>
+</div>
