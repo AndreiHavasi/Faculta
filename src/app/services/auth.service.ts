@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AccountService } from "./account.service";
 import { Account } from "../account";
-import { first } from "rxjs";
+import { map, Observable } from "rxjs";
 
 
 @Injectable({
@@ -9,27 +9,20 @@ import { first } from "rxjs";
 })
 export class AuthService {
 
-  account: Account = new Account('','',false);
+  accounts: Account[] = [];
 
   constructor(
     private accountService: AccountService
   ) { }
 
-  public isAuthenticated(): boolean {
-    this.getLoggedInAccount();
-    return this.account.loggedIn;
+  public isAuth(): Observable<boolean> {
+    let authedAccount: Account;
+    return this.accountService.getAccounts().pipe(
+      map(accounts => {
+        authedAccount = accounts.filter(account => AccountService.isAccountLoggedIn(account))[0];
+        return authedAccount !== undefined;
+      })
+    );
   }
 
-  private getLoggedInAccount(): void {
-    let loggedInAccount: Account;
-    this.accountService.getAccounts()
-      .pipe(first())
-      .subscribe(accounts => {
-          loggedInAccount = (accounts.filter(account => AccountService.isAccountLoggedIn(account)))[0];
-        },
-        error => {},
-        () => this.account = new Account(loggedInAccount.username, loggedInAccount.password,
-          loggedInAccount.loggedIn, loggedInAccount.id)
-      );
-  }
 }

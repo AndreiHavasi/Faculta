@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from "../services/account.service";
 import { Account } from "../account";
-import { first } from "rxjs";
+import { map } from "rxjs";
 
 @Component({
   selector: 'app-account',
@@ -20,16 +20,16 @@ export class AccountComponent implements OnInit {
     this.getLoggedInAccount();
   }
 
-  private getLoggedInAccount(): void {
-    let loggedInAccount: Account;
+  private getLoggedInAccount() {
+    let authedAccount: Account;
     this.accountService.getAccounts()
-      .pipe(first())
-      .subscribe(accounts => {
-          loggedInAccount = (accounts.filter(account => AccountService.isAccountLoggedIn(account)))[0];
-        },
-        error => {},
-        () => this.account = new Account(loggedInAccount.username, loggedInAccount.password,
-          loggedInAccount.loggedIn, loggedInAccount.id)
+      .pipe(
+        map(accounts => {
+          authedAccount = accounts.filter(account => AccountService.isAccountLoggedIn(account))[0];
+        })
+      )
+      .subscribe(() =>
+        this.account = new Account(authedAccount.username, authedAccount.password, authedAccount.loggedIn, authedAccount.id)
       );
   }
 

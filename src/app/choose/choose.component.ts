@@ -38,7 +38,7 @@ export class ChooseComponent implements OnInit {
         const cars: Car[] = value[0];
         this.orders = value[1];
         this.availableCars = cars.filter(car => this.isCarAvailable(car));
-        });
+      });
 
   }
 
