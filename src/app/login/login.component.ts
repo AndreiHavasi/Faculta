@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { AccountService } from "../services/account.service";
 import { Account } from "../account";
 import { Subject, takeUntil } from "rxjs";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -66,9 +68,11 @@ export class LoginComponent implements OnInit {
 
   private login(account: Account): void {
     this.accountService.postAccount(account)
-      .pipe
-      (takeUntil(this.componentDestroyed$))
-      .subscribe(() => this.navigateToHome());
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe(() => {
+        this.authService.login();
+        this.navigateToHome()
+      });
   }
 
   private navigateToHome() {

@@ -35,6 +35,15 @@ export class AccountService {
     );
   }
 
+  /** PUT: update account on mock server */
+  putAccount(account: Account): Observable<any> {
+    const accountUrl = this.accountsUrl + '/' + account.id;
+    return this.http.put(accountUrl, account, this.httpOptions).pipe(
+      tap(_ => console.log(`updated account with id=${account.id}`)),
+      catchError(this.handleError<any>('putAccount'))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.log(error);

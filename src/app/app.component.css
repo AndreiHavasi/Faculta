@@ -8,3 +8,7 @@
     pointer-events: none;
     color: white!important;
 }
+.door-nav-item {
+  margin-left: 1.5rem;
+  line-height: 2.5rem;
+}

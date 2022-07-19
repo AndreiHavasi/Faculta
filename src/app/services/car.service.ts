@@ -28,11 +28,11 @@ export class CarService {
       )
   }
 
-  /** POST: update car on mock server */
+  /** PUT: update car on mock server */
   putCar(car: Car): Observable<any> {
     const carUrl = this.carsUrl + '/' + car.id;
-    return this.http.put(carUrl, car, this.httpOptions).
-      pipe(
+    return this.http.put(carUrl, car, this.httpOptions)
+      .pipe(
         tap(_ => console.log(`updated car id=${car.id}`)),
         catchError(this.handleError<any>('putCar'))
       )
