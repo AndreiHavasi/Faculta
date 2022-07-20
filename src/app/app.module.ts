@@ -14,15 +14,16 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { OrdersComponent } from "./orders/orders.component";
+import { CarsComponent } from './cars/cars.component';
+import { ChooseComponent } from './choose/choose.component';
+import { AccountComponent } from './account/account.component';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 
 import { InMemoryDataService } from './services/in-memory-data.service';
 import { LeaveTimeValidatorDirective } from './directives/leave-time-validator.directive';
 import { PickTimeValidatorDirective } from './directives/pick-time-validator.directive';
-import { CarsComponent } from './cars/cars.component';
-import { ChooseComponent } from './choose/choose.component';
-import { LoginComponent } from './login/login.component';
 import { NetworkInterceptor } from "./services/network.interceptor";
-import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AccountComponent } from './account/account.component';
     PickTimeValidatorDirective,
     CarsComponent,
     ChooseComponent,
+    SignupComponent,
     LoginComponent,
     AccountComponent
   ],
