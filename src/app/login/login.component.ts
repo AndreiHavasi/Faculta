@@ -5,7 +5,6 @@ import { AccountService } from "../services/account.service";
 import { Account } from "../account";
 import { Subject, takeUntil } from "rxjs";
 import { AuthService } from "../services/auth.service";
-import { passwordValidator } from "../validators/password.validator";
 
 @Component({
   selector: 'app-login',
@@ -15,6 +14,8 @@ import { passwordValidator } from "../validators/password.validator";
 export class LoginComponent implements OnInit {
 
   componentDestroyed$: Subject<boolean> = new Subject();
+
+  accounts: Account[] = [];
 
   public loginForm!: FormGroup;
   public submitted = false;
@@ -27,23 +28,11 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getAccounts();
+
     this.loginForm = this.formBuilder.group({
-      username : [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^[A-Za-z]*$/),
-          Validators.minLength(3),
-          Validators.maxLength(20)
-        ]
-      ],
-      password: [
-        '',
-        [
-          Validators.required,
-          passwordValidator()
-        ]
-      ]
+      username : ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -69,12 +58,36 @@ export class LoginComponent implements OnInit {
   }
 
   private login(account: Account): void {
-    this.accountService.postAccount(account)
+    const signedUpAccount = this.accountIsSignedUp(account);
+    if(signedUpAccount != undefined)
+      if(LoginComponent.passwordIsValid(account, signedUpAccount)) {
+        signedUpAccount.loggedIn = true;
+        this.accountService.putAccount(signedUpAccount)
+          .pipe(takeUntil(this.componentDestroyed$))
+          .subscribe(() => {
+            this.authService.login();
+            this.navigateToHome()
+          });
+      }
+      else {
+        alert('parola gresita');
+      }
+    else
+      alert('contul nu exista');
+  }
+
+  private accountIsSignedUp(loggingAccount: Account): Account | undefined {
+    return this.accounts.find(account => account.username == loggingAccount.username);
+  }
+
+  private static passwordIsValid(loggingAccount: Account, existingAccount: Account): boolean {
+    return loggingAccount.password == existingAccount.password;
+  }
+
+  private getAccounts(): void {
+    this.accountService.getAccounts()
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(() => {
-        this.authService.login();
-        this.navigateToHome()
-      });
+      .subscribe(accounts => this.accounts = accounts);
   }
 
   private navigateToHome() {

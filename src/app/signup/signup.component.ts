@@ -73,7 +73,7 @@ export class SignupComponent implements OnInit {
   }
 
   private signup(account: Account): void {
-    if(this.isUniqueAccount(account))
+    if(this.accountIsUnique(account))
       this.accountService.postAccount(account)
         .pipe(takeUntil(this.componentDestroyed$))
         .subscribe(() => {
@@ -84,7 +84,7 @@ export class SignupComponent implements OnInit {
       alert('contu exista deja');
   }
 
-  private isUniqueAccount(newAccount: Account): boolean {
+  private accountIsUnique(newAccount: Account): boolean {
     return !this.accounts.some(account => account.username == newAccount.username);
   }
 

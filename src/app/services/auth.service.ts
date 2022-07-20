@@ -10,7 +10,7 @@ import { map, Observable } from "rxjs";
 })
 export class AuthService {
 
-  authedAccount: Account = new Account('', '', true);
+  public authedAccount: Account = new Account('', '', true);
 
   constructor(
     private accountService: AccountService,
