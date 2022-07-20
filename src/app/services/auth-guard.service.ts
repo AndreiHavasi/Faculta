@@ -17,10 +17,8 @@ export class AuthGuardService implements CanActivate {
   canActivate(): Observable<boolean> {
     return this.authService.isAuth().pipe(
       tap(isAuth => {
-        if(!isAuth) {
-          alert('vezi ca nu esti logat');
+        if(!isAuth)
           this.router.navigateByUrl('');
-        }
       })
     );
   }

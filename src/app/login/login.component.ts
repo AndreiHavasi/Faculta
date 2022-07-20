@@ -31,7 +31,9 @@ export class LoginComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[A-Za-z].{2,12}$/)
+          Validators.pattern(/^[A-Za-z]*$/),
+          Validators.minLength(3),
+          Validators.maxLength(12)
         ]
       ],
       password: [
@@ -42,21 +44,26 @@ export class LoginComponent implements OnInit {
             '(?=.*[a-z])' +
             '(?=.*[A-Z])' +
             '(?=.*[0-9])' +
-            '.{9,}'
+            '(?=.*[-!$%^&*()_+|~=`{}\\[\\]:";\'<>?,.\\/])' +
+            '.{12,}'
           )
         ]
       ]
     });
   }
 
-  get formControl() {
-    return this.loginForm.controls;
+  get username() {
+    return this.loginForm.get('username')!;
+  }
+
+  get password() {
+    return this.loginForm.get('password')!;
   }
 
 
   onSubmit(): void {
     this.submitted = true;
-    let account: Account = new Account(this.formControl['username'].value, this.formControl['password'].value, true);
+    let account: Account = new Account(this.username.value, this.password.value, true);
 
     if(this.loginForm.valid) {
       this.login(account);
