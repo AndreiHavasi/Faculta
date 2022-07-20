@@ -15,7 +15,7 @@
             <ul>
               <li *ngIf="username.errors['pattern']">doar litere</li>
               <li *ngIf="username.errors['minlength']">minim 3 caractere</li>
-              <li *ngIf="username.errors['maxlength']">maxim 12 caractere</li>
+              <li *ngIf="username.errors['maxlength']">maxim 20 caractere</li>
             </ul>
           </ng-template>
         </div>
@@ -30,12 +30,13 @@
           <div *ngIf="password.errors['required']; else passwordRequirements">Baga parola</div>
           <ng-template #passwordRequirements>
             Parola tre sa aibe:
-            <ul *ngIf="password.errors['pattern']">
-              <li>o litera mica</li>
-              <li>o litera mare</li>
-              <li>o cifra</li>
-              <li>un simbol</li>
-              <li>minim 12 caractere</li>
+            <ul>
+              <li *ngIf="password.errors['hasLowerCase'] == false">1 litera mica</li>
+              <li *ngIf="password.errors['hasUpperCase'] == false">1 litera mare</li>
+              <li *ngIf="password.errors['hasDigit'] == false">1 cifra</li>
+              <li *ngIf="password.errors['hasSymbol'] == false">1 simbol</li>
+              <li *ngIf="password.errors['lengthGood'] == false">minim 12 caractere</li>
+              <li *ngIf="password.errors['noSpace'] == false">0 spatii</li>
             </ul>
           </ng-template>
         </div>

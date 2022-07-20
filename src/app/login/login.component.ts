@@ -5,6 +5,7 @@ import { AccountService } from "../services/account.service";
 import { Account } from "../account";
 import { Subject, takeUntil } from "rxjs";
 import { AuthService } from "../services/auth.service";
+import { passwordValidator } from "../validators/password.validator";
 
 @Component({
   selector: 'app-login',
@@ -33,20 +34,14 @@ export class LoginComponent implements OnInit {
           Validators.required,
           Validators.pattern(/^[A-Za-z]*$/),
           Validators.minLength(3),
-          Validators.maxLength(12)
+          Validators.maxLength(20)
         ]
       ],
       password: [
         '',
         [
           Validators.required,
-          Validators.pattern(
-            '(?=.*[a-z])' +
-            '(?=.*[A-Z])' +
-            '(?=.*[0-9])' +
-            '(?=.*[-!$%^&*()_+|~=`{}\\[\\]:";\'<>?,.\\/])' +
-            '.{12,}'
-          )
+          passwordValidator()
         ]
       ]
     });
