@@ -10,7 +10,7 @@ import { map, Observable } from "rxjs";
 })
 export class AuthService {
 
-  public authedAccount: Account = new Account('', '', true);
+  public authedAccount: Account = new Account('', '', false);
 
   constructor(
     private accountService: AccountService,
@@ -34,7 +34,7 @@ export class AuthService {
         authedAccount = accounts.filter(account => AccountService.isAccountLoggedIn(account))[0];
       })
     ).subscribe(() =>
-      this.authedAccount = new Account(authedAccount.username, authedAccount.password, authedAccount.loggedIn, authedAccount.id)
+      this.authedAccount = new Account(authedAccount.username, authedAccount.password, true, authedAccount.id)
     );
   }
 

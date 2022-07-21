@@ -16,7 +16,7 @@ export class AppComponent {
   ) { }
 
   public showPageLinks(): boolean {
-    return this.router.url != '/';
+    return this.authService.authedAccount.loggedIn;
   }
 
   public logout() {
