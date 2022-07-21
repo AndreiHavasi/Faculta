@@ -5,6 +5,8 @@ import { AccountService } from "../services/account.service";
 import { Account } from "../account";
 import { Subject, takeUntil } from "rxjs";
 import { AuthService } from "../services/auth.service";
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { LoginModalComponent } from "../modals/login-modal/login-modal.component";
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private accountService: AccountService,
-    private authService: AuthService
+    private authService: AuthService,
+    private matDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -59,8 +62,8 @@ export class LoginComponent implements OnInit {
 
   private login(account: Account): void {
     const signedUpAccount = this.accountIsSignedUp(account);
-    if(signedUpAccount != undefined)
-      if(LoginComponent.passwordIsValid(account, signedUpAccount)) {
+    if (signedUpAccount != undefined) {
+      if (LoginComponent.passwordIsValid(account, signedUpAccount)) {
         signedUpAccount.loggedIn = true;
         this.accountService.putAccount(signedUpAccount)
           .pipe(takeUntil(this.componentDestroyed$))
@@ -69,25 +72,29 @@ export class LoginComponent implements OnInit {
             this.navigateToHome()
           });
       }
-      else {
-        alert('parola gresita');
-      }
-    else
-      alert('contul nu exista');
+      else this.loginModal();
+    }
+    else this.loginModal();
+
   }
 
   private accountIsSignedUp(loggingAccount: Account): Account | undefined {
     return this.accounts.find(account => account.username == loggingAccount.username);
   }
 
-  private static passwordIsValid(loggingAccount: Account, existingAccount: Account): boolean {
-    return loggingAccount.password == existingAccount.password;
+  private static passwordIsValid(loggingAccount: Account, signedUpAccount: Account): boolean {
+    return loggingAccount.password == signedUpAccount.password;
   }
 
   private getAccounts(): void {
     this.accountService.getAccounts()
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(accounts => this.accounts = accounts);
+  }
+
+  private loginModal(): void {
+    const dialogConfig = new MatDialogConfig();
+    this.matDialog.open(LoginModalComponent, dialogConfig);
   }
 
   private navigateToHome() {

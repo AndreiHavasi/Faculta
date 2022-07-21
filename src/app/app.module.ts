@@ -24,6 +24,7 @@ import { InMemoryDataService } from './services/in-memory-data.service';
 import { LeaveTimeValidatorDirective } from './directives/leave-time-validator.directive';
 import { PickTimeValidatorDirective } from './directives/pick-time-validator.directive';
 import { NetworkInterceptor } from "./services/network.interceptor";
+import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { NetworkInterceptor } from "./services/network.interceptor";
     ChooseComponent,
     SignupComponent,
     LoginComponent,
-    AccountComponent
+    AccountComponent,
+    LoginModalComponent
   ],
   imports: [
     CommonModule,

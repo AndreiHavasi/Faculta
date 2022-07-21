@@ -1,44 +1,46 @@
 <div class="container">
   <div class="row d-flex justify-content-center mt-5">
     <form class="card col-sm-4 md-text" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <h1 class="w-75 ms-auto me-auto">Creeaza cont</h1>
+      <div class="w-75 ms-auto me-auto">
+        <h1>Creeaza cont</h1>
 
-      <div class="form-group w-75 ms-auto me-auto">
-        <label>Nume utilizator</label>
-        <input type="text" class="form-control" id="username"
-               formControlName="username">
+        <div class="form-group">
+          <label>Nume utilizator</label>
+          <input type="text" class="form-control" id="username"
+                 formControlName="username">
 
-        <div *ngIf="submitted && username.errors" class="alert alert-danger">
-          <div *ngIf="username.errors['required']; else usernameRequirements">N-ai username?</div>
-          <ng-template #usernameRequirements>
-            Username tre sa aibe:
-            <ul>
-              <li *ngIf="username.errors['pattern']">doar litere</li>
-              <li *ngIf="username.errors['minlength']">minim 3 caractere</li>
-              <li *ngIf="username.errors['maxlength']">maxim 20 caractere</li>
-            </ul>
-          </ng-template>
+          <div *ngIf="submitted && username.errors" class="alert alert-danger">
+            <div *ngIf="username.errors['required']; else usernameRequirements">N-ai username?</div>
+            <ng-template #usernameRequirements>
+              Username tre sa aibe:
+              <ul>
+                <li *ngIf="username.errors['pattern']">doar litere</li>
+                <li *ngIf="username.errors['minlength']">minim 3 caractere</li>
+                <li *ngIf="username.errors['maxlength']">maxim 20 caractere</li>
+              </ul>
+            </ng-template>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group mt-3 w-75 ms-auto me-auto">
-        <label>Parola</label>
-        <input type="password" class="form-control" id="password"
-               formControlName="password">
+        <div class="form-group mt-3">
+          <label>Parola</label>
+          <input type="password" class="form-control" id="password"
+                 formControlName="password">
 
-        <div *ngIf="submitted && password.errors" class="alert alert-danger">
-          <div *ngIf="password.errors['required']; else passwordRequirements">Baga parola</div>
-          <ng-template #passwordRequirements>
-            Parola tre sa aibe:
-            <ul>
-              <li *ngIf="password.errors['hasLowerCase'] == false">1 litera mica</li>
-              <li *ngIf="password.errors['hasUpperCase'] == false">1 litera mare</li>
-              <li *ngIf="password.errors['hasDigit'] == false">1 cifra</li>
-              <li *ngIf="password.errors['hasSymbol'] == false">1 simbol</li>
-              <li *ngIf="password.errors['isLongEnough'] == false">minim 12 caractere</li>
-              <li *ngIf="password.errors['hasNoSpace'] == false">0 spatii</li>
-            </ul>
-          </ng-template>
+          <div *ngIf="submitted && password.errors" class="alert alert-danger">
+            <div *ngIf="password.errors['required']; else passwordRequirements">Baga parola</div>
+            <ng-template #passwordRequirements>
+              Parola tre sa aibe:
+              <ul>
+                <li *ngIf="password.errors['hasLowerCase'] == false">1 litera mica</li>
+                <li *ngIf="password.errors['hasUpperCase'] == false">1 litera mare</li>
+                <li *ngIf="password.errors['hasDigit'] == false">1 cifra</li>
+                <li *ngIf="password.errors['hasSymbol'] == false">1 simbol</li>
+                <li *ngIf="password.errors['isLongEnough'] == false">minim 12 caractere</li>
+                <li *ngIf="password.errors['hasNoSpace'] == false">0 spatii</li>
+              </ul>
+            </ng-template>
+          </div>
         </div>
       </div>
 
