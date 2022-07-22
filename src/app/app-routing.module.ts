@@ -9,11 +9,12 @@ import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
 import { AccountComponent} from "./account/account.component";
 import { AuthGuardService } from "./services/auth-guard.service";
+import { MainComponent } from "./main/main.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: '', canActivate: [AuthGuardService],
+  { path: '', canActivate: [AuthGuardService], component: MainComponent,
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },
