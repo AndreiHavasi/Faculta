@@ -5,7 +5,7 @@ import { AccountService } from "../services/account.service";
 import { Account } from "../account";
 import { Subject, takeUntil } from "rxjs";
 import { AuthService } from "../services/auth.service";
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { LoginModalComponent } from "../modals/login-modal/login-modal.component";
 
 @Component({
@@ -93,8 +93,7 @@ export class LoginComponent implements OnInit {
   }
 
   private loginModal(): void {
-    const dialogConfig = new MatDialogConfig();
-    this.matDialog.open(LoginModalComponent, dialogConfig);
+    this.matDialog.open(LoginModalComponent,{panelClass: 'custom-dialog-container'});
   }
 
   private navigateToHome() {

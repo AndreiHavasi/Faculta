@@ -18,4 +18,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .no-padding {
   padding: 0;
 }
+.custom-dialog-container .mat-dialog-container {
+  outline: black solid 1px;
+  background-color: #f8d7da;
+}
 
