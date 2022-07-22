@@ -35,7 +35,6 @@ export class SignupComponent implements OnInit {
       username : [
         '',
         [
-          Validators.required,
           Validators.pattern(/^[A-Za-z]*$/),
           Validators.minLength(3),
           Validators.maxLength(20)
@@ -44,7 +43,6 @@ export class SignupComponent implements OnInit {
       password: [
         '',
         [
-          Validators.required,
           passwordValidator()
         ]
       ]

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row d-flex justify-content-center mt-5">
-    <form class="card col-sm-4 md-text" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <form ngNativeValidate class="card col-sm-4 md-text" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="w-75 ms-auto me-auto">
         <h1 class="fw-normal">Creeaza cont</h1>
 
@@ -8,14 +8,14 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="1.25rem" height="1.25rem" fill="#6c757d" class="bi bi-person-fill" viewBox="0 0 16 16">
             <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
           </svg>
-          <input type="text" placeholder="Nume utilizator" class="form-control" id="username" formControlName="username">
+          <input type="text" placeholder="Nume utilizator" class="form-control" id="username" formControlName="username" required>
         </div>
 
         <div class="form-group mt-3 mb-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="1.25rem" height="1.25rem" fill="#6c757d" class="bi bi-lock-fill" viewBox="0 0 16 16">
             <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
           </svg>
-          <input type="password" placeholder="Parola" class="form-control" id="password" formControlName="password">
+          <input type="password" placeholder="Parola" class="form-control" id="password" formControlName="password" required>
         </div>
       </div>
 
@@ -23,32 +23,25 @@
            [class.mb-5]="!submitted || (submitted && signupForm.valid)" [class.mb-2]="!signupForm.valid && submitted">
         <button type="submit" class="btn btn-primary md-text">Creeaza cont</button>
 
-        <div *ngIf="submitted && !signupForm.valid" class="alert alert-danger mt-4 fw-light">
+        <div *ngIf="submitted && !signupForm.valid" class="alert alert-danger mt-3 fw-light">
           <div *ngIf="username.errors">
-            <div *ngIf="username.errors['required']; else usernameRequirements">Baga username</div>
-            <ng-template #usernameRequirements>
-              Username tre sa aibe:
-              <ul>
-                <li *ngIf="username.errors['pattern']">doar litere</li>
-                <li *ngIf="username.errors['minlength']">minim 3 caractere</li>
-                <li *ngIf="username.errors['maxlength']">maxim 20 caractere</li>
-              </ul>
-            </ng-template>
+            Username tre sa aibe:
+            <ul>
+              <li *ngIf="username.errors['pattern']">doar litere</li>
+              <li *ngIf="username.errors['minlength']">minim 3 caractere</li>
+              <li *ngIf="username.errors['maxlength']">maxim 20 caractere</li>
+            </ul>
           </div>
-
           <div *ngIf="password.errors">
-            <div *ngIf="password.errors['required']; else passwordRequirements">Baga parola</div>
-            <ng-template #passwordRequirements>
-              Parola tre sa aibe:
-              <ul>
-                <li *ngIf="password.errors['hasLowerCase'] == false">1 litera mica</li>
-                <li *ngIf="password.errors['hasUpperCase'] == false">1 litera mare</li>
-                <li *ngIf="password.errors['hasDigit'] == false">1 cifra</li>
-                <li *ngIf="password.errors['hasSymbol'] == false">1 simbol</li>
-                <li *ngIf="password.errors['isLongEnough'] == false">minim 12 caractere</li>
-                <li *ngIf="password.errors['hasNoSpace'] == false">0 spatii</li>
-              </ul>
-            </ng-template>
+            Parola tre sa aibe:
+            <ul>
+              <li *ngIf="password.errors['hasLowerCase'] == false">1 litera mica</li>
+              <li *ngIf="password.errors['hasUpperCase'] == false">1 litera mare</li>
+              <li *ngIf="password.errors['hasDigit'] == false">1 cifra</li>
+              <li *ngIf="password.errors['hasSymbol'] == false">1 simbol</li>
+              <li *ngIf="password.errors['isLongEnough'] == false">minim 12 caractere</li>
+              <li *ngIf="password.errors['hasNoSpace'] == false">0 spatii</li>
+            </ul>
           </div>
         </div>
       </div>
