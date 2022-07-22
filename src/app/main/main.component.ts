@@ -17,10 +17,6 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public showPageLinks(): boolean {
-    return this.authService.authedAccount.loggedIn;
-  }
-
   public logout() {
     this.authService.logout();
   }
