@@ -67,10 +67,7 @@ export class LoginComponent implements OnInit {
         signedUpAccount.loggedIn = true;
         this.accountService.putAccount(signedUpAccount)
           .pipe(takeUntil(this.componentDestroyed$))
-          .subscribe(() => {
-            this.authService.login();
-            this.navigateToHome()
-          });
+          .subscribe(() => this.authService.login());
       }
       else this.loginModal();
     }
@@ -94,10 +91,6 @@ export class LoginComponent implements OnInit {
 
   private loginModal(): void {
     this.matDialog.open(LoginModalComponent,{panelClass: 'custom-dialog-container'});
-  }
-
-  private navigateToHome() {
-    this.router.navigateByUrl('/home');
   }
 
 }

@@ -74,10 +74,7 @@ export class SignupComponent implements OnInit {
     if(this.accountIsUnique(account))
       this.accountService.postAccount(account)
         .pipe(takeUntil(this.componentDestroyed$))
-        .subscribe(() => {
-          this.authService.login();
-          this.navigateToHome()
-        });
+        .subscribe(() => this.authService.login());
     else
       alert('contu exista deja');
   }
@@ -90,10 +87,6 @@ export class SignupComponent implements OnInit {
     this.accountService.getAccounts()
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(accounts => this.accounts = accounts);
-  }
-
-  private navigateToHome() {
-    this.router.navigateByUrl('/home');
   }
 
 }

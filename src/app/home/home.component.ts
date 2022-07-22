@@ -44,11 +44,7 @@ export class HomeComponent implements OnInit {
   onSubmit(order: RentalOrder): void {
     this.orderService.postOrder(order)
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(() => this.navigateToChoose());
+      .subscribe(() => this.router.navigateByUrl('/choose'));
 
-  }
-
-  navigateToChoose() {
-    this.router.navigateByUrl('/choose');
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AccountService } from "./account.service";
 import { Account } from "../account";
 import { Router } from "@angular/router";
-import { map, Observable } from "rxjs";
+import { map } from "rxjs";
 
 
 @Injectable({
@@ -17,14 +17,8 @@ export class AuthService {
     private router: Router
   ) { }
 
-  public isAuth(): Observable<boolean> {
-    let authedAccount: Account;
-    return this.accountService.getAccounts().pipe(
-      map(accounts => {
-        authedAccount = accounts.filter(account => AccountService.isAccountLoggedIn(account))[0];
-        return authedAccount !== undefined;
-      })
-    );
+  public isAuth(): boolean {
+    return this.authedAccount.loggedIn;
   }
 
   public login() {
@@ -33,8 +27,10 @@ export class AuthService {
       map(accounts => {
         authedAccount = accounts.filter(account => AccountService.isAccountLoggedIn(account))[0];
       })
-    ).subscribe(() =>
-      this.authedAccount = new Account(authedAccount.username, authedAccount.password, true, authedAccount.id)
+    ).subscribe(() => {
+        this.authedAccount = new Account(authedAccount.username, authedAccount.password, true, authedAccount.id);
+        this.router.navigateByUrl('/home');
+      }
     );
   }
 
