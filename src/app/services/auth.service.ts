@@ -36,7 +36,7 @@ export class AuthService {
 
   public logout() {
     this.authedAccount.loggedIn = false;
-    this.accountService.putAccount(this.authedAccount).subscribe(() => this.router.navigateByUrl(''));
+    this.accountService.putAccount(this.authedAccount).subscribe(() => this.router.navigateByUrl('/login'));
   }
 
 }
