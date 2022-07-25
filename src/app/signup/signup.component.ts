@@ -6,6 +6,7 @@ import { Account } from "../account";
 import { Subject, takeUntil } from "rxjs";
 import { AuthService } from "../services/auth.service";
 import { passwordValidator } from "../validators/password.validator";
+import { passwordConfirmValidator } from "../validators/password-confirm.validator";
 
 @Component({
   selector: 'app-signup',
@@ -37,16 +38,21 @@ export class SignupComponent implements OnInit {
         [
           Validators.pattern(/^[A-Za-z]*$/),
           Validators.minLength(3),
-          Validators.maxLength(20)
+          Validators.maxLength(20),
+          Validators.required
         ]
       ],
       password: [
         '',
         [
-          passwordValidator()
+          passwordValidator(),
+          Validators.required
         ]
-      ]
-    });
+      ],
+      passwordConfirm: ['']
+      },
+      { validators: passwordConfirmValidator('password', 'passwordConfirm')}
+    );
   }
 
   get username() {
@@ -55,6 +61,10 @@ export class SignupComponent implements OnInit {
 
   get password() {
     return this.signupForm.get('password')!;
+  }
+
+  get passwordConfirm() {
+    return this.signupForm.get('passwordConfirm')!;
   }
 
 

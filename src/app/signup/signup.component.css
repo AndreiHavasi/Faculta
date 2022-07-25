@@ -24,3 +24,6 @@ svg {
 ul {
   margin: 0;
 }
+.form-link {
+  text-decoration: none;
+}
