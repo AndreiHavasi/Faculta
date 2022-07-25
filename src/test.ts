@@ -6,6 +6,7 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
+import { AppModule } from "./app/app.module";
 
 declare const require: {
   context(path: string, deep?: boolean, filter?: RegExp): {
@@ -15,8 +16,10 @@ declare const require: {
 };
 
 // First, initialize the Angular testing environment.
-getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
+getTestBed().initTestEnvironment([
+    BrowserDynamicTestingModule,
+    AppModule
+  ],
   platformBrowserDynamicTesting(),
 );
 
