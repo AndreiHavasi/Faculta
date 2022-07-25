@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AccountService } from "./account.service";
-import { Account } from "../account";
+import { Account } from "../classes/account";
 import { Router } from "@angular/router";
 import { map } from "rxjs";
 

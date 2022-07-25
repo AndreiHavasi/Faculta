@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { RentalOrder } from "../rental-order";
+import { RentalOrder } from "../classes/rental-order";
 import { Observable, of } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AccountService } from "../services/account.service";
-import { Account } from "../account";
+import { AccountService } from "../../../services/account.service";
+import { Account } from "../../../classes/account";
 import { Subject, takeUntil } from "rxjs";
-import { AuthService } from "../services/auth.service";
-import { passwordValidator } from "../validators/password.validator";
-import { passwordConfirmValidator } from "../validators/password-confirm.validator";
+import { AuthService } from "../../../services/auth.service";
+import { passwordValidator } from "../../../validators/password.validator";
+import { passwordConfirmValidator } from "../../../validators/password-confirm.validator";
 import { MatDialog } from "@angular/material/dialog";
-import { SignupModalComponent } from "../modals/signup-modal/signup-modal.component";
+import { SignupModalComponent } from "../../modals/signup-modal/signup-modal.component";
 
 @Component({
   selector: 'app-signup',
@@ -69,7 +69,6 @@ export class SignupComponent implements OnInit {
   get passwordConfirm() {
     return this.signupForm.get('passwordConfirm')!;
   }
-
 
   onSubmit(): void {
     this.submitted = true;

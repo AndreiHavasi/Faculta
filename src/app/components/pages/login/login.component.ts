@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AccountService } from "../services/account.service";
-import { Account } from "../account";
+import { AccountService } from "../../../services/account.service";
+import { Account } from "../../../classes/account";
 import { Subject, takeUntil } from "rxjs";
-import { AuthService } from "../services/auth.service";
+import { AuthService } from "../../../services/auth.service";
 import { MatDialog } from '@angular/material/dialog';
-import { LoginModalComponent } from "../modals/login-modal/login-modal.component";
+import { LoginModalComponent } from "../../modals/login-modal/login-modal.component";
 
 @Component({
   selector: 'app-login',

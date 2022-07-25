@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RentalOrder } from "../rental-order";
-import { OrderService } from "../services/order.service";
+import { RentalOrder } from "../../../classes/rental-order";
+import { OrderService } from "../../../services/order.service";
 import { Router } from "@angular/router";
 import { Subject, takeUntil } from "rxjs";
 

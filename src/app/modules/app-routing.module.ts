@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
-import { HomeComponent } from "./home/home.component";
-import { AboutComponent } from "./about/about.component";
-import { ContactComponent } from "./contact/contact.component";
-import { OrdersComponent } from "./orders/orders.component";
-import { ChooseComponent } from "./choose/choose.component";
-import { LoginComponent } from "./login/login.component";
-import { SignupComponent } from "./signup/signup.component";
-import { AccountComponent} from "./account/account.component";
-import { AuthGuardService } from "./services/auth-guard.service";
-import { MainComponent } from "./main/main.component";
+import { HomeComponent } from "../components/pages/home/home.component";
+import { AboutComponent } from "../components/pages/about/about.component";
+import { ContactComponent } from "../components/pages/contact/contact.component";
+import { OrdersComponent } from "../components/pages/orders/orders.component";
+import { ChooseComponent } from "../components/pages/choose/choose.component";
+import { LoginComponent } from "../components/pages/login/login.component";
+import { SignupComponent } from "../components/pages/signup/signup.component";
+import { AccountComponent} from "../components/pages/account/account.component";
+import { AuthGuardService } from "../services/auth-guard.service";
+import { MainComponent } from "../components/layouts/main/main.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
