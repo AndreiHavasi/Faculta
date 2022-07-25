@@ -7,6 +7,8 @@ import { Subject, takeUntil } from "rxjs";
 import { AuthService } from "../services/auth.service";
 import { passwordValidator } from "../validators/password.validator";
 import { passwordConfirmValidator } from "../validators/password-confirm.validator";
+import { MatDialog } from "@angular/material/dialog";
+import { SignupModalComponent } from "../modals/signup-modal/signup-modal.component";
 
 @Component({
   selector: 'app-signup',
@@ -26,7 +28,8 @@ export class SignupComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private accountService: AccountService,
-    private authService: AuthService
+    private authService: AuthService,
+    private matDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -85,8 +88,7 @@ export class SignupComponent implements OnInit {
       this.accountService.postAccount(account)
         .pipe(takeUntil(this.componentDestroyed$))
         .subscribe(() => this.authService.login());
-    else
-      alert('contu exista deja');
+    else this.signupModal();
   }
 
   private accountIsUnique(newAccount: Account): boolean {
@@ -97,6 +99,10 @@ export class SignupComponent implements OnInit {
     this.accountService.getAccounts()
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(accounts => this.accounts = accounts);
+  }
+
+  private signupModal(): void {
+    this.matDialog.open(SignupModalComponent, {panelClass: 'custom-dialog-container'});
   }
 
 }

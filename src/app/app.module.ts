@@ -26,6 +26,7 @@ import { PickTimeValidatorDirective } from './directives/pick-time-validator.dir
 import { NetworkInterceptor } from "./services/network.interceptor";
 import { LoginModalComponent } from './modals/login-modal/login-modal.component';
 import { MainComponent } from './main/main.component';
+import { SignupModalComponent } from './modals/signup-modal/signup-modal.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { MainComponent } from './main/main.component';
     LoginComponent,
     AccountComponent,
     LoginModalComponent,
-    MainComponent
+    MainComponent,
+    SignupModalComponent
   ],
   imports: [
     CommonModule,
