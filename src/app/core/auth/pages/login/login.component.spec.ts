@@ -22,4 +22,8 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('accounts should be fetched', () => {
+    expect(component.accounts.length > 0);
+  });
 });

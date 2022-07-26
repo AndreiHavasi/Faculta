@@ -14,10 +14,10 @@ import { MainComponent } from "./shared/layouts/main/main.component";
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'home', component: HomeComponent },
+  // { path: 'home', component: HomeComponent },
   { path: '', canActivate: [AuthGuardService], component: MainComponent,
     children: [
-      //{ path: 'home', component: HomeComponent },
+      { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },
       { path: 'contact', component: ContactComponent },
       { path: 'orders', component: OrdersComponent },
