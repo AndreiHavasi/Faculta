@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
-import { HomeComponent } from "../components/pages/home/home.component";
-import { AboutComponent } from "../components/pages/about/about.component";
-import { ContactComponent } from "../components/pages/contact/contact.component";
-import { OrdersComponent } from "../components/pages/orders/orders.component";
-import { ChooseComponent } from "../components/pages/choose/choose.component";
-import { LoginComponent } from "../components/pages/login/login.component";
-import { SignupComponent } from "../components/pages/signup/signup.component";
-import { AccountComponent} from "../components/pages/account/account.component";
-import { AuthGuardService } from "../services/auth-guard.service";
-import { MainComponent } from "../components/layouts/main/main.component";
+import { HomeComponent } from "./home/pages/home/home.component";
+import { AboutComponent } from "./home/pages/about/about.component";
+import { ContactComponent } from "./home/pages/contact/contact.component";
+import { OrdersComponent } from "./home/pages/orders/orders.component";
+import { ChooseComponent } from "./home/pages/choose/choose.component";
+import { LoginComponent } from "./core/auth/pages/login/login.component";
+import { SignupComponent } from "./core/auth/pages/signup/signup.component";
+import { AccountComponent} from "./home/pages/account/account.component";
+import { AuthGuardService } from "./core/services/auth-guard.service";
+import { MainComponent } from "./shared/layouts/main/main.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

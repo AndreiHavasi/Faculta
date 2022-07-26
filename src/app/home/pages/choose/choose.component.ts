@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CarService } from "../../../services/car.service";
-import { OrderService } from "../../../services/order.service";
-import { RentalOrder } from "../../../classes/rental-order";
-import { Car } from "../../../classes/car";
+import { CarService } from "../../../core/services/car.service";
+import { OrderService } from "../../../core/services/order.service";
+import { RentalOrder } from "../../../core/classes/rental-order";
+import { Car } from "../../../core/classes/car";
 import { Router } from "@angular/router";
 import { combineLatest, Observable, Subject, takeUntil } from "rxjs";
-import { LoadingService } from "../../../services/loading.service";
+import { LoadingService } from "../../../core/services/loading.service";
 
 @Component({
   selector: 'app-choose',

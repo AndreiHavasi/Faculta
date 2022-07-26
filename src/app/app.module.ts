@@ -4,29 +4,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AppRoutingModule } from './modules/app-routing.module';
-import { MaterialModule } from './modules/material.module';
+import { AppRoutingModule } from './app-routing.module';
+import { MaterialModule } from './shared/modules/material.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/pages/home/home.component';
-import { AboutComponent } from './components/pages/about/about.component';
-import { ContactComponent } from './components/pages/contact/contact.component';
-import { OrdersComponent } from "./components/pages/orders/orders.component";
-import { CarsComponent } from './components/others/cars/cars.component';
-import { ChooseComponent } from './components/pages/choose/choose.component';
-import { AccountComponent } from './components/pages/account/account.component';
-import { SignupComponent } from './components/pages/signup/signup.component';
-import { LoginComponent } from './components/pages/login/login.component';
+import { HomeComponent } from './home/pages/home/home.component';
+import { AboutComponent } from './home/pages/about/about.component';
+import { ContactComponent } from './home/pages/contact/contact.component';
+import { OrdersComponent } from "./home/pages/orders/orders.component";
+import { CarsComponent } from './home/others/cars/cars.component';
+import { ChooseComponent } from './home/pages/choose/choose.component';
+import { AccountComponent } from './home/pages/account/account.component';
+import { SignupComponent } from './core/auth/pages/signup/signup.component';
+import { LoginComponent } from './core/auth/pages/login/login.component';
 
-import { InMemoryDataService } from './services/in-memory-data.service';
-import { LeaveTimeValidatorDirective } from './directives/leave-time-validator.directive';
-import { PickTimeValidatorDirective } from './directives/pick-time-validator.directive';
-import { NetworkInterceptor } from "./services/network.interceptor";
-import { LoginModalComponent } from './components/modals/login-modal/login-modal.component';
-import { MainComponent } from './components/layouts/main/main.component';
-import { SignupModalComponent } from './components/modals/signup-modal/signup-modal.component';
+import { InMemoryDataService } from './core/services/in-memory-data.service';
+import { LeaveTimeValidatorDirective } from './home/directives/leave-time-validator.directive';
+import { PickTimeValidatorDirective } from './home/directives/pick-time-validator.directive';
+import { NetworkInterceptor } from "./core/services/network.interceptor";
+import { LoginModalComponent } from './core/auth/modals/login-modal/login-modal.component';
+import { MainComponent } from './shared/layouts/main/main.component';
+import { SignupModalComponent } from './core/auth/modals/signup-modal/signup-modal.component';
 
 
 @NgModule({

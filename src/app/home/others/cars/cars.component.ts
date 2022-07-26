@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CarService } from "../../../services/car.service";
-import { Car } from "../../../classes/car";
+import { CarService } from "../../../core/services/car.service";
+import { Car } from "../../../core/classes/car";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
