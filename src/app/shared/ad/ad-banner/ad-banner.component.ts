@@ -5,11 +5,7 @@ import { AdItem } from "../ad-item";
 
 @Component({
   selector: 'app-ad-banner',
-  template: `
-    <div>
-      <ng-template appAd></ng-template>
-    </div>
-  `,
+  templateUrl: './ad-banner.component.html',
   styleUrls: ['./ad-banner.component.css'],
 })
 
