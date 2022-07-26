@@ -3,6 +3,8 @@ import { RentalOrder } from "../../../core/classes/rental-order";
 import { OrderService } from "../../../core/services/order.service";
 import { Router } from "@angular/router";
 import { Subject, takeUntil } from "rxjs";
+import { AdService } from "../../../shared/ad/services/ad.service";
+import { AdItem } from "../../../shared/ad/ad-item";
 
 @Component({
   selector: 'app-home',
@@ -10,6 +12,8 @@ import { Subject, takeUntil } from "rxjs";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  ads: AdItem[] = [];
 
   componentDestroyed$: Subject<boolean> = new Subject();
 
@@ -25,10 +29,12 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private router: Router
+    private router: Router,
+    private adService: AdService
   ) { }
 
   ngOnInit(): void {
+    this.ads = this.adService.getAds();
   }
 
   ngOnDestroy(): void {
