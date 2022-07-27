@@ -15,6 +15,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .md-text {
   font-size: 1.25rem;
 }
+.lg-rounded {
+  border-radius: 1rem;
+}
+.md-rounded {
+  border-radius: .75rem;
+}
+.sm-rounded {
+  border-radius: .5rem;
+}
+.horizontal-flip {
+  transform: scaleX(-1);
+}
 .no-padding {
   padding: 0;
 }

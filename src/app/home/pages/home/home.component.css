@@ -1,10 +1,41 @@
+.form-group {
+  position: relative;
+}
+.form-group > svg {
+  position: absolute;
+  left: 1.5rem;
+  top: 2.5rem;
+}
 select {
-    height: 5rem;
+  height: 3rem;
+  padding-left: 2rem;
+}
+.mat-form-field {
+  height: 3rem;
+}
+.mat-form-field svg {
+  position: absolute;
+}
+input {
+  margin-left: 1.5rem;
+}
+::ng-deep.mat-form-field-infix {
+  border: 0;
+}
+::ng-deep.mat-form-field-underline {
+  display: none;
 }
 .ng-invalid:not(form)  {
-    background-color: #f8d7da;
+  background-color: #f8d7da;
 }
 button {
-    height: 5rem;
-    width: 10rem;
+  height: 3rem;
+  width: 9rem;
+  margin-top: 2.5rem;
+  position: relative;
+}
+button > svg {
+  position: absolute;
+  left: 1rem;
+  top: .75rem;
 }
