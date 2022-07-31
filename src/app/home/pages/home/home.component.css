@@ -15,9 +15,11 @@ select {
 }
 .mat-form-field svg {
   position: absolute;
+  vertical-align: middle;
 }
 input {
   margin-left: 1.5rem;
+  vertical-align: middle;
 }
 ::ng-deep.mat-form-field-infix {
   border: 0;
@@ -31,7 +33,7 @@ input {
 button {
   height: 3rem;
   width: 9rem;
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
   position: relative;
 }
 button > svg {

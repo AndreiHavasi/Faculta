@@ -29,7 +29,7 @@ import { NetworkInterceptor } from "./services/network.interceptor";
     )
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'ro'},
+    {provide: LOCALE_ID, useValue: 'ro' },
     {provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true}
   ],
 })

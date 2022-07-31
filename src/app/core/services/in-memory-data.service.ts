@@ -16,9 +16,9 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
 
     const cars: Car[] = [
-      { name: 'matiz', url: '../assets/images/matiz.jpg', id: 1, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []},
-      { name: 'tigaie', url: '../assets/images/bmw.jpg', id: 2, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []},
-      { name: 'cls', url: '../assets/images/cls.jpg', id: 3, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []}
+      { name: 'Volkswagen Polo', url: '../assets/images/polo.jpg', seats: 5, engine: 'Benzina', transmission: 'Manual', rate: 50, id: 1, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []},
+      { name: 'Skoda Octavia', url: '../assets/images/skoda.jpg', seats: 5, engine: 'Benzina', transmission: 'Manual', rate: 100, id: 2, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []},
+      { name: 'Mercedes GLE', url: '../assets/images/gle.jpg', seats: 5, engine: 'Diesel', transmission: 'Automatic', rate: 250,  id: 3, pickDate: [], leaveDate: [], pickTime: [], leaveTime: []}
     ];
 
     const accounts: Account[] = [
