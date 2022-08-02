@@ -1,9 +1,9 @@
-import { fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 
 import { AccountService } from './account.service';
 import { TestScheduler } from "rxjs/testing";
 import { HttpClient } from "@angular/common/http";
-import { delay, of } from "rxjs";
+import { of } from "rxjs";
 import { Account } from "../classes/account";
 
 describe('AccountService', () => {

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
 import { HomeModule } from "../../home.module";
@@ -44,15 +44,6 @@ describe('HomeComponent', () => {
     leaveTimeValidator.pickDate = sameDate;
     leaveTimeValidator.leaveDate = sameDate;
 
-    /*
-    let pickTime = fixture.debugElement.query(By.css('[name=pickTime]'));
-    let leaveTime = fixture.debugElement.query(By.css('[name=leaveTime]'));
-
-    let form: NgForm = fixture.debugElement.query(By.css('card')).injector.get(NgForm);
-    let pickTimeControl = form.control.get('pickTime');
-    let leaveTimeControl = form.control.get('leaveTime');
-     */
-
     //good input
     expect(pickTimeValidator.validate(new FormControl('08:00'))).toEqual(null);
     expect(leaveTimeValidator.validate(new FormControl('16:00'))).toEqual(null);
@@ -62,6 +53,85 @@ describe('HomeComponent', () => {
     expect(leaveTimeValidator.validate(new FormControl('08:00'))).toEqual({
       'leave-time-validator': true, 'requiredValue': ['08:00', sameDate.toISOString(), sameDate.toISOString()]
     });
-
   });
+
+  it('pick and leave time should be valid - proper', async(() => {
+    const pickTime = fixture.debugElement.query(By.css('[name=pickTime]'));
+    const leaveTime = fixture.debugElement.query(By.css('[name=leaveTime]'));
+    const pickTimeSelect: HTMLSelectElement = pickTime.nativeElement;
+    const leaveTimeSelect: HTMLSelectElement = leaveTime.nativeElement;
+    let form: NgForm = fixture.debugElement.query(By.directive(NgForm)).injector.get(NgForm);
+
+    pickTimeSelect.value = '08:00';
+    leaveTimeSelect.value = '16:00';
+    pickTimeSelect.dispatchEvent(new Event('change'));
+    leaveTimeSelect.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      expect(form.valid).toBeTruthy();
+    })
+
+    pickTimeSelect.value = '16:00';
+    leaveTimeSelect.value = '08:00';
+    pickTimeSelect.dispatchEvent(new Event('change'));
+    leaveTimeSelect.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      expect(form.valid).toBeFalsy();
+    })
+
+  }));
+
 });
+
+/*
+    const pickTime = fixture.debugElement.query(By.css('[name=pickTime]'));
+    const leaveTime = fixture.debugElement.query(By.css('[name=leaveTime]'));
+    const pickTimeSelect: HTMLSelectElement = pickTime.nativeElement;
+    const leaveTimeSelect: HTMLSelectElement = leaveTime.nativeElement;
+
+    let form: NgForm = fixture.debugElement.query(By.directive(NgForm)).injector.get(NgForm);
+    let pickTimeControl = form.control.get('pickTime');
+    let leaveTimeControl = form.control.get('leaveTime');
+
+    console.log(form);
+    console.log(pickTimeControl);
+    console.log(leaveTimeControl);
+
+    pickTimeSelect.value = '08:00';
+    leaveTimeSelect.value = '16:00';
+    pickTimeSelect.dispatchEvent(new Event('change'));
+    leaveTimeSelect.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+
+    expect(pickTimeValidator.validate(pickTimeControl as FormControl)).toEqual(null);
+    expect(leaveTimeValidator.validate(leaveTimeControl as FormControl)).toEqual(null);
+*/
+
+/*
+    const pickTime = fixture.debugElement.query(By.css('[name=pickTime]'));
+    const leaveTime = fixture.debugElement.query(By.css('[name=leaveTime]'));
+    const pickTimeSelect: HTMLSelectElement = pickTime.nativeElement;
+    const leaveTimeSelect: HTMLSelectElement = leaveTime.nativeElement;
+    const submitButton = fixture.debugElement.nativeElement.querySelector('.btn-primary');
+
+    pickTimeSelect.value = '08:00';
+    leaveTimeSelect.value = '16:00';
+    pickTimeSelect.dispatchEvent(new Event('change'));
+    leaveTimeSelect.dispatchEvent(new Event('change'));
+
+    fixture.detectChanges();
+    tick();
+    expect(submitButton.disabled).toBeFalsy();
+
+    pickTimeSelect.value = '16:00';
+    leaveTimeSelect.value = '08:00';
+    pickTimeSelect.dispatchEvent(new Event('change'));
+    leaveTimeSelect.dispatchEvent(new Event('change'));
+
+    fixture.detectChanges();
+    tick();
+    expect(submitButton.disabled).not.toBeFalsy();
+*/

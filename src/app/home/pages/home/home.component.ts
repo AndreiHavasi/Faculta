@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RentalOrder } from "../../../core/classes/rental-order";
 import { OrderService } from "../../../core/services/order.service";
 import { Router } from "@angular/router";
 import { Subject, takeUntil } from "rxjs";
 import { AdService } from "../../../shared/ad/services/ad.service";
 import { AdItem } from "../../../shared/ad/ad-item";
+import { ControlContainer, NgForm } from "@angular/forms";
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class HomeComponent implements OnInit {
 
