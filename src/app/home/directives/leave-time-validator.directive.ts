@@ -1,4 +1,4 @@
-import {Validator, NG_VALIDATORS, FormControl} from "@angular/forms";
+import { Validator, NG_VALIDATORS, FormControl } from "@angular/forms";
 import { Directive, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Directive({
@@ -22,7 +22,7 @@ export class LeaveTimeValidatorDirective implements Validator, OnChanges {
     const leaveTime: string = control.value;
 
     if(this.pickTime >= leaveTime && this.dateCheck()) {
-      return {'leave-time-validator': true, 'requiredValue': [this.pickTime, this.pickDate, this.leaveDate]}
+      return {'leave-time-validator': true, 'requiredValue': [this.pickTime, this.pickDate.toISOString(), this.leaveDate.toISOString()]}
     }
     return null;
   }

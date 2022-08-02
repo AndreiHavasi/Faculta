@@ -22,7 +22,7 @@ export class PickTimeValidatorDirective implements Validator, OnChanges {
     const pickTime: string = control.value;
 
     if(this.leaveTime <= pickTime && this.dateCheck()) {
-      return {'pick-time-validator': true, 'requiredValue': [this.leaveTime, this.pickDate, this.leaveDate]}
+      return {'pick-time-validator': true, 'requiredValue': [this.leaveTime, this.pickDate.toISOString(), this.leaveDate.toISOString()]}
     }
 
     return null;
