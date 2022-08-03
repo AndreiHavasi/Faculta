@@ -1,22 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RentalOrder } from "../../../core/classes/rental-order";
 import { OrderService } from "../../../core/services/order.service";
 import { Router } from "@angular/router";
 import { Subject, takeUntil } from "rxjs";
 import { AdService } from "../../../shared/ad/services/ad.service";
 import { AdItem } from "../../../shared/ad/ad-item";
-import { ControlContainer, NgForm } from "@angular/forms";
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('orderForm', {static: true})ngForm: NgForm | undefined;
-
   ads: AdItem[] = [];
 
   componentDestroyed$: Subject<boolean> = new Subject();
