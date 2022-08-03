@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AdDirective } from "../directives/ad.directive";
 import { Ad } from "../ad";
 import { AdItem } from "../ad-item";
@@ -15,7 +15,9 @@ export class AdBannerComponent implements OnInit, OnDestroy {
   currentAdIndex = -1;
 
   @ViewChild(AdDirective, {static: true}) appAd!: AdDirective;
-  interval: number|undefined;
+
+  interval: number | undefined;
+  adComponentRef: ComponentRef<Ad> | undefined;
 
   constructor() { }
 
@@ -35,8 +37,8 @@ export class AdBannerComponent implements OnInit, OnDestroy {
     const viewContainerRef = this.appAd.viewContainerRef;
     viewContainerRef.clear();
 
-    const componentRef = viewContainerRef.createComponent<Ad>(adItem.component);
-    componentRef.instance.data = adItem.data;
+    this.adComponentRef = viewContainerRef.createComponent<Ad>(adItem.component);
+    this.adComponentRef.instance.data = adItem.data;
   }
 
   getAds() {

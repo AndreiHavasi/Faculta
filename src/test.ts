@@ -24,6 +24,6 @@ getTestBed().initTestEnvironment([
 );
 
 // Then we find all the tests.
-const context = require.context('./', true, /home.component\.spec\.ts$/);
+const context = require.context('./', true, /ad-banner.component\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);

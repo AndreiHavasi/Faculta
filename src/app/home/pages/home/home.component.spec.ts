@@ -55,8 +55,8 @@ describe('HomeComponent', () => {
     const pickTime: HTMLSelectElement = pickTimeEl.nativeElement;
     const leaveTime: HTMLSelectElement = leaveTimeEl.nativeElement;
 
-    const pickTimeControl = form.form.controls['pickTime'];
-    const leaveTimeControl = form.form.controls['leaveTime'];
+    const pickTimeControl = form.control.get('pickTime');
+    const leaveTimeControl = form.control.get('leaveTime');
 
     pickTime.value = '16:00';
     leaveTime.value = '08:00';
