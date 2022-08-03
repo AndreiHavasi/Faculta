@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
 import { HomeModule } from "../../home.module";
@@ -14,13 +14,13 @@ describe('HomeComponent', () => {
   let pickTimeValidator: PickTimeValidatorDirective;
   let leaveTimeValidator: LeaveTimeValidatorDirective;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       imports: [ HomeModule ],
       declarations: [ HomeComponent, PickTimeValidatorDirective, LeaveTimeValidatorDirective ]
     })
     .compileComponents();
-  });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
@@ -38,7 +38,8 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('pick and leave time should be valid - ez' ,() => {
+
+  xit('pick and leave time should be valid - ez' ,() => {
     const sameDate = new Date();
     pickTimeValidator.pickDate = sameDate;
     pickTimeValidator.leaveDate = sameDate;
@@ -56,23 +57,11 @@ describe('HomeComponent', () => {
     });
   });
 
-  it('pick and leave time should be valid - proper', fakeAsync(() => {
-    const pickTime = fixture.debugElement.query(By.css('[name=pickTime]'));
-    const leaveTime = fixture.debugElement.query(By.css('[name=leaveTime]'));
-    const pickTimeSelect: HTMLSelectElement = pickTime.nativeElement;
-    const leaveTimeSelect: HTMLSelectElement = leaveTime.nativeElement;
-
-    const form = fixture.debugElement.query(By.directive(NgForm));
-    const pickTimeControl = form.injector.get(NgForm).control.get('pickTime');
-    console.log(pickTimeControl);
-
-    pickTimeSelect.value = '08:00';
-    pickTimeSelect.dispatchEvent(new Event('change'));
-    fixture.detectChanges();
-    tick();
-
-    console.log(pickTimeControl);
-    console.log(pickTimeSelect.value);
+  it('pick and leave time should be valid - proper', waitForAsync(() => {
+    fixture.whenStable().then(() => {
+      const ctrl = component.ngForm?.form.controls['pickTime'];
+      console.log(ctrl);
+    })
   }));
 });
 

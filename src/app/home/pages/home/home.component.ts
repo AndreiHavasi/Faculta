@@ -15,6 +15,7 @@ import { ControlContainer, NgForm } from "@angular/forms";
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('orderForm', {static: true})ngForm: NgForm | undefined;
 
   ads: AdItem[] = [];
 
