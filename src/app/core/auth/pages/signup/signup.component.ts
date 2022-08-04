@@ -58,6 +58,11 @@ export class SignupComponent implements OnInit {
     );
   }
 
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
+  }
+
   get username() {
     return this.signupForm.get('username')!;
   }

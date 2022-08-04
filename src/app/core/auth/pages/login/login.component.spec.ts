@@ -1,16 +1,19 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import { CoreModule } from "../../../core.module";
 import { AccountService } from "../../../services/account.service";
-import { of } from "rxjs";
+import { isEmpty, of, Subject, takeUntil } from "rxjs";
 import { Account } from "../../../classes/account";
+import { TestScheduler } from "rxjs/testing";
+import { MatDialogRef } from "@angular/material/dialog";
 
 describe('LoginComponent', () => {
 
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let accountService: AccountService;
+  let scheduler: TestScheduler;
 
 
   beforeEach(async () => {
@@ -32,13 +35,18 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
   });
 
+  beforeEach(() => scheduler = new TestScheduler((actual, expected) => {
+    expect(actual).toEqual(expected);
+  }));
+
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('accounts should be fetched', fakeAsync(() => {
+  it('accounts should be fetched', () => {
     expect(component.accounts.length).toBeGreaterThan(0);
-  }));
+  });
 
   it('form should be invalid when empty', () => {
     component.username.setValue('');
@@ -70,7 +78,7 @@ describe('LoginComponent', () => {
     expect(errors['required']).toBeFalsy();
   })
 
-  it('form should submit on button press', async(() => {
+  it('form should submit on button press', waitForAsync(() => {
     spyOn(component, 'onSubmit');
     const submitButton = fixture.debugElement.nativeElement.querySelector('.btn-primary');
     submitButton.click();
@@ -100,5 +108,66 @@ describe('LoginComponent', () => {
     expect(accountService.putAccount).not.toHaveBeenCalled();
   }));
 
+  it('login modal should pop up if logging account is not signed up 1', fakeAsync(() => {
+    const notSignedUpAccount = new Account ('qwe', 'asd', false);
+    spyOn(component['matDialog'], 'open');
+
+    component['login'](notSignedUpAccount);
+    tick();
+    expect(component['matDialog'].open).toHaveBeenCalled();
+  }));
+
+  it('login modal should pop up if logging account is not signed up 2',fakeAsync(() => {
+    const notSignedUpAccount = new Account ('qwe', 'asd', false);
+
+    // no dialog open at init
+    expect(component['matDialog'].openDialogs).toEqual([]);
+
+    // dialog open after login
+    component['login'](notSignedUpAccount);
+    tick();
+    expect(component['matDialog'].openDialogs).toHaveSize(1);
+  }));
+
+  it('login modal should pop up if logging account is not signed up 3',fakeAsync(() => {
+    let testFinished$: Subject<boolean> = new Subject();
+
+    const notSignedUpAccount = new Account ('qwe', 'asd', false);
+    const afterOpenedSubjectIsEmpty = component['matDialog'].afterOpened.pipe(isEmpty(), takeUntil(testFinished$));
+
+    // initial value should be false
+    afterOpenedSubjectIsEmpty.subscribe(next => {
+      expect(next).toBeFalse();
+    })
+
+    // value after wrong log in should be true
+    component['login'](notSignedUpAccount);
+    tick();
+    afterOpenedSubjectIsEmpty.subscribe(next => {
+      expect(next).toBeTrue();
+    })
+
+    testFinished$.next(true);
+    testFinished$.complete();
+  }));
+
+  it('login modal should pop up if logging account is not signed up 4',fakeAsync(() => {
+    const notSignedUpAccount = new Account ('qwe', 'asd', false);
+    console.log(component['matDialog']);
+
+    component['login'](notSignedUpAccount);
+    tick();
+
+    scheduler.run(({expectObservable}) => {
+      const afterOpenedSubjectIsEmpty = component['matDialog'].afterOpened.pipe(isEmpty());
+      const expectedMarble = '(a|)';
+
+      afterOpenedSubjectIsEmpty.subscribe(next => {
+        console.log(of(next));
+        expectObservable(of(next)).toBe(expectedMarble);
+      });
+    });
+
+  }));
 
 });

@@ -45,7 +45,6 @@ describe('AccountService', () => {
       service.getAccounts().subscribe(fetchedAccounts => {
         expectObservable(of(fetchedAccounts)).toBe(expectedMarble, expectedAccounts);
       })
-      flush();
     });
   }));
 

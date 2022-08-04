@@ -39,6 +39,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
+  }
+
   get username() {
     return this.loginForm.get('username')!;
   }

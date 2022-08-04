@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { NetworkInterceptor } from './network.interceptor';
-import { HttpRequest } from "@angular/common/http";
+import { HttpHandler, HttpRequest } from "@angular/common/http";
 import { Observable, Observer } from "rxjs";
 
 describe('NetworkInterceptor', () => {
@@ -21,7 +21,7 @@ describe('NetworkInterceptor', () => {
     spyOn(interceptor["loadingService"], 'show');
 
     const requestMock = new HttpRequest('GET', 'api/orders');
-    const next: any = {
+    const next: HttpHandler = {
       handle: () => {
         return new Observable((observer: Observer<any>) => {
           observer.complete();
@@ -31,7 +31,7 @@ describe('NetworkInterceptor', () => {
 
     interceptor.intercept(requestMock, next).subscribe({
         complete: () => {
-          expect(interceptor["loadingService"].show).toHaveBeenCalled();
+          expect(interceptor['loadingService'].show).toHaveBeenCalled();
           done();
         }
       }
