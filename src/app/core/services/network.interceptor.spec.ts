@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { NetworkInterceptor } from './network.interceptor';
 import { HttpRequest } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, Observer } from "rxjs";
 
 describe('NetworkInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -23,18 +23,17 @@ describe('NetworkInterceptor', () => {
     const requestMock = new HttpRequest('GET', 'api/orders');
     const next: any = {
       handle: () => {
-        return Observable.create((subscriber: { complete: () => void; }) => {
-          subscriber.complete();
+        return new Observable((observer: Observer<any>) => {
+          observer.complete();
         });
       }
     };
 
-    interceptor.intercept(requestMock, next).subscribe(
-      next => {},
-      error => {},
-      () => {
-        expect(interceptor["loadingService"].show).toHaveBeenCalled();
-        done();
+    interceptor.intercept(requestMock, next).subscribe({
+        complete: () => {
+          expect(interceptor["loadingService"].show).toHaveBeenCalled();
+          done();
+        }
       }
     )
   });
