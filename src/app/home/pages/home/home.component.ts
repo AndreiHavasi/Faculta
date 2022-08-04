@@ -51,6 +51,5 @@ export class HomeComponent implements OnInit {
     this.orderService.postOrder(order)
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(() => this.router.navigateByUrl('/choose'));
-
   }
 }

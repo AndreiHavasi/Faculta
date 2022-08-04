@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AdItem } from "../ad-item";
-import { CarComponent } from "../car.component";
+import { CarAdComponent } from "../car-ad.component";
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +12,15 @@ export class AdService {
   getAds() {
     return [
       new AdItem(
-        CarComponent,
+        CarAdComponent,
         {name: 'Matiz', url: '../assets/images/matiz.jpg', price:'400 €'}
       ),
       new AdItem(
-        CarComponent,
+        CarAdComponent,
         {name: 'Tigaie', url: '../assets/images/bmw.jpg', price:'2000 €'}
       ),
       new AdItem(
-        CarComponent,
+        CarAdComponent,
         {name: 'CLS', url: '../assets/images/cls.jpg', price:'40000 €'}
       )
     ];

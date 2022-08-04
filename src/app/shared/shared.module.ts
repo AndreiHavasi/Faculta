@@ -11,7 +11,7 @@ import { AppRoutingModule } from "../app-routing.module";
 import { MainComponent } from "./layouts/main/main.component";
 import { AdDirective } from './ad/directives/ad.directive';
 import { AdBannerComponent } from './ad/ad-banner/ad-banner.component';
-import { CarComponent } from "./ad/car.component";
+import { CarAdComponent } from "./ad/car-ad.component";
 
 
 
@@ -20,7 +20,7 @@ import { CarComponent } from "./ad/car.component";
     MainComponent,
     AdDirective,
     AdBannerComponent,
-    CarComponent
+    CarAdComponent
   ],
   imports: [
     CommonModule,

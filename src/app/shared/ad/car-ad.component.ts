@@ -13,6 +13,6 @@ import { Ad } from "./ad";
   `,
   styles: ['.car-details { background-color: #0d6efd; }']
 })
-export class CarComponent implements Ad {
+export class CarAdComponent implements Ad {
   @Input() data: any;
 }
