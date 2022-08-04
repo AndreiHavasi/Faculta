@@ -153,15 +153,13 @@ describe('LoginComponent', () => {
 
   it('login modal should pop up if logging account is not signed up 4',fakeAsync(() => {
     const notSignedUpAccount = new Account ('qwe', 'asd', false);
-    console.log(component['matDialog']);
-
-    component['login'](notSignedUpAccount);
-    tick();
 
     scheduler.run(({expectObservable}) => {
       const afterOpenedSubjectIsEmpty = component['matDialog'].afterOpened.pipe(isEmpty());
       const expectedMarble = '(a|)';
 
+      component['login'](notSignedUpAccount);
+      tick();
       afterOpenedSubjectIsEmpty.subscribe(next => {
         console.log(of(next));
         expectObservable(of(next)).toBe(expectedMarble);
