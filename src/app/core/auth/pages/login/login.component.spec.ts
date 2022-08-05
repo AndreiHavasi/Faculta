@@ -6,7 +6,6 @@ import { AccountService } from "../../../services/account.service";
 import { isEmpty, of, Subject, takeUntil } from "rxjs";
 import { Account } from "../../../classes/account";
 import { TestScheduler } from "rxjs/testing";
-import { MatDialogRef } from "@angular/material/dialog";
 
 describe('LoginComponent', () => {
 
@@ -151,7 +150,7 @@ describe('LoginComponent', () => {
     testFinished$.complete();
   }));
 
-  it('login modal should pop up if logging account is not signed up 4',fakeAsync(() => {
+  xit('login modal should pop up if logging account is not signed up 4',fakeAsync(() => {
     const notSignedUpAccount = new Account ('qwe', 'asd', false);
 
     scheduler.run(({expectObservable}) => {
@@ -165,7 +164,6 @@ describe('LoginComponent', () => {
         expectObservable(of(next)).toBe(expectedMarble);
       });
     });
-
   }));
 
 });
