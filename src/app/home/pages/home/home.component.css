@@ -49,6 +49,7 @@ button {
   position: relative;
   background-color: var(--light-blue);
   border-color: var(--light-blue);
+  border-width: 2px;
   transition: .4s;
 }
 button > svg {

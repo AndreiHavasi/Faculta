@@ -23,13 +23,13 @@ header {
   margin-left: 3rem;
 }
 .navbar-brand {
-  color: var(--bleumarine);
+  color: var(--light-blue);
 }
 .navbar-brand > span {
   color: var(--light-orange);
 }
 .nav-link {
-  color: var(--bleumarine);
+  color: var(--light-blue);
 }
 .nav-link:hover {
   color: var(--light-orange);
