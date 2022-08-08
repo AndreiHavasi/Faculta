@@ -1,10 +1,11 @@
-import { async, ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import { CoreModule } from "../../../core.module";
 import { AccountService } from "../../../services/account.service";
 import { isEmpty, of, Subject, takeUntil } from "rxjs";
 import { Account } from "../../../classes/account";
+
 import { TestScheduler } from "rxjs/testing";
 
 describe('LoginComponent', () => {
@@ -12,8 +13,8 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let accountService: AccountService;
-  let scheduler: TestScheduler;
 
+  let scheduler: TestScheduler;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -150,19 +151,25 @@ describe('LoginComponent', () => {
     testFinished$.complete();
   }));
 
-  xit('login modal should pop up if logging account is not signed up 4',fakeAsync(() => {
+  it('login modal should pop up if logging account is not signed up 4',fakeAsync(() => {
     const notSignedUpAccount = new Account ('qwe', 'asd', false);
 
     scheduler.run(({expectObservable}) => {
       const afterOpenedSubjectIsEmpty = component['matDialog'].afterOpened.pipe(isEmpty());
       const expectedMarble = '(a|)';
+      let expectedValue = {a: false};
+
+      afterOpenedSubjectIsEmpty.subscribe(next => {
+        expectObservable(of(next)).toBe(expectedMarble, expectedValue);
+      });
 
       component['login'](notSignedUpAccount);
       tick();
+      expectedValue = {a: true};
       afterOpenedSubjectIsEmpty.subscribe(next => {
-        console.log(of(next));
-        expectObservable(of(next)).toBe(expectedMarble);
+        expectObservable(of(next)).toBe(expectedMarble, expectedValue);
       });
+
     });
   }));
 

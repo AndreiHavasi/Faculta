@@ -5,6 +5,8 @@ import { TestScheduler } from "rxjs/testing";
 import { HttpClient } from "@angular/common/http";
 import { of } from "rxjs";
 import { Account } from "../classes/account";
+import { addMatchers, hot, initTestScheduler } from "jasmine-marbles";
+import { TestObservable } from "jasmine-marbles/src/test-observables";
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -19,6 +21,9 @@ describe('AccountService', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     httpClientSpy.get.and
       .returnValue(of({status_code: 200, account: { username: 'admin', password: 'Rentitadmin.2022', loggedIn: false, id: 0 }}))
+
+    initTestScheduler();
+    addMatchers();
   });
 
   beforeEach(() => scheduler = new TestScheduler((actual, expected) => {
@@ -47,6 +52,15 @@ describe('AccountService', () => {
       })
       flush();
     });
+  }));
+
+  it('accounts should be fetched - marble testing with jasmine-marbles', fakeAsync(() => {
+    const expected$: TestObservable = hot('(a|)', { a: [ { username: 'admin', password: 'Rentitadmin.2022', loggedIn: false, id: 0 } ] });
+
+    service.getAccounts().subscribe(fetchedAccounts => {
+      expect(of(fetchedAccounts)).toBeObservable(expected$);
+    })
+    flush();
   }));
 
 });
