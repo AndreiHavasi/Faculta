@@ -14,8 +14,7 @@ import { MainComponent } from "./shared/layouts/main/main.component";
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  //{ path: 'home', component: HomeComponent },
-  { path: '', canActivate: [AuthGuardService], component: MainComponent,
+  { path: '', /*canActivate: [AuthGuardService],*/ component: MainComponent,
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },

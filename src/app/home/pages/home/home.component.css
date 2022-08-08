@@ -1,3 +1,15 @@
+.container-fluid {
+  background-image: url('../../../../assets/images/background.jpg');
+  background-size: cover;
+  background-color: rgba(0,40,95,.5);
+  background-blend-mode: screen;
+  background-position-y: 75%;
+  padding-top: 5rem;
+  padding-bottom: 10rem;
+}
+h1 {
+  color: white;
+}
 .form-group {
   position: relative;
 }
@@ -28,16 +40,23 @@ input {
   display: none;
 }
 .ng-invalid:not(form)  {
-  background-color: #f8d7da;
+  background-color: var(--light-gray);
 }
 button {
   height: 3rem;
   width: 9rem;
   margin-top: 1.5rem;
   position: relative;
+  background-color: var(--light-blue);
+  border-color: var(--light-blue);
+  transition: .4s;
 }
 button > svg {
   position: absolute;
   left: 1rem;
   top: .75rem;
+}
+button:hover {
+  background-color: transparent;
+  color: var(--light-blue);
 }

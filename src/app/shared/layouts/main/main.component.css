@@ -1,14 +1,44 @@
+header {
+  background-color: var(--bleumarine);
+  color: white;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.header-link {
+  text-decoration: none;
+  color: white;
+}
+.header-link:hover {
+  color: var(--light-orange);
+}
+.navbar {
+  border-bottom: var(--bleumarine) 3px solid;
+}
 .navbar-nav {
   flex-direction: row;
 }
 .nav-item {
   margin-left: 3rem;
 }
+.navbar-brand {
+  color: var(--bleumarine);
+}
+.navbar-brand > span {
+  color: var(--light-orange);
+}
+.nav-link {
+  color: var(--bleumarine);
+}
+.nav-link:hover {
+  color: var(--light-orange);
+}
 .active-link {
   pointer-events: none;
-  color: white!important;
+  color: var(--light-orange);
 }
 .door-nav-item {
   margin-left: 1.5rem;
-  line-height: 2.5rem;
+  line-height: 1.75rem;
 }

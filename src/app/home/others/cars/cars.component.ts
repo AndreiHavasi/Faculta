@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CarService } from "../../../core/services/car.service";
 import { Car } from "../../../core/classes/car";
 import { Subject, takeUntil } from "rxjs";
@@ -31,5 +31,6 @@ export class CarsComponent implements OnInit {
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(cars => this.cars = cars);
   }
+
 
 }
