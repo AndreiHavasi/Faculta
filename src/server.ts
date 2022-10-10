@@ -4,6 +4,8 @@ import morgan from 'morgan';
 import routes from './routes/routes';
 import mongoose from 'mongoose';
 
+require("dotenv").config();
+
 const app: Express = express();
 mongoose.connect(process.env.MONGO_URI!, {
   autoIndex: true
