@@ -7,7 +7,7 @@ export interface IOrder {
   leaveDate: Date,
   pickTime: string,
   leaveTime: string,
-  id: number,
+  carId: string,
   description?: string
 }
 
@@ -36,8 +36,8 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  id: {
-    type: Number,
+  carId: {
+    type: String,
     required: true
   },
   description: {

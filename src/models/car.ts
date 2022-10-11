@@ -35,11 +35,11 @@ const CarSchema = new mongoose.Schema({
     required: true
   },
   pickDate: {
-    type: [Number],
+    type: [Date],
     required: true
   },
   leaveDate: {
-    type: [Number],
+    type: [Date],
     required: true
   },
   pickTime: {

@@ -11,12 +11,11 @@ const getCars = async(request: Request, response: Response) => {
     return response.status(500).json(err);
   }
 }
-
 const updateCar = async(request: Request, response: Response) => {
   try {
     const result = await Car
       .findByIdAndUpdate(
-        request.body.id,
+        request.body._id,
         {
           pickDate: request.body.pickDate,
           leaveDate: request.body.leaveDate,

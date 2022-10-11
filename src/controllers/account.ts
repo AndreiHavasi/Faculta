@@ -28,7 +28,7 @@ const updateAccount = async(request: Request, response: Response) => {
   try {
     const result = await Account
       .findByIdAndUpdate(
-        request.body.id,
+        request.body._id,
         {
           loggedIn: request.body.loggedIn
         });
