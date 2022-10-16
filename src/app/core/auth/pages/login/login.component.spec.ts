@@ -4,7 +4,7 @@ import { LoginComponent } from './login.component';
 import { CoreModule } from "../../../core.module";
 import { AccountService } from "../../../services/account.service";
 import { isEmpty, of, Subject, takeUntil } from "rxjs";
-import { Account } from "../../../classes/account";
+import { Account } from "../../../models/account";
 
 import { TestScheduler } from "rxjs/testing";
 

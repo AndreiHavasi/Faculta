@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AccountService } from "./account.service";
-import { Account } from "../classes/account";
+import { Account } from "../models/account";
 import { Router } from "@angular/router";
 import { map } from "rxjs";
 
@@ -10,7 +10,7 @@ import { map } from "rxjs";
 })
 export class AuthService {
 
-  public authedAccount: Account = new Account('', '', false);
+  public authedAccount: Account = { username: '', password: '', loggedIn: false };
 
   constructor(
     private accountService: AccountService,
@@ -28,7 +28,7 @@ export class AuthService {
         authedAccount = accounts.filter(account => AccountService.isAccountLoggedIn(account))[0];
       })
     ).subscribe(() => {
-        this.authedAccount = new Account(authedAccount.username, authedAccount.password, true, authedAccount.id);
+        this.authedAccount = { username: authedAccount.username, password: authedAccount.password, loggedIn: true, _id: authedAccount._id };
         this.router.navigateByUrl('/home');
       }
     );

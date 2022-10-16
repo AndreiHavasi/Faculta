@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RentalOrder } from "../../../core/classes/rental-order";
+import { RentalOrder } from "../../../core/models/rental-order";
 import { OrderService } from "../../../core/services/order.service";
 import { Router } from "@angular/router";
 import { Subject, takeUntil } from "rxjs";
@@ -23,9 +23,14 @@ export class HomeComponent implements OnInit {
     '19:30','20:00','20:30','21:00','21:30'];
   today = new Date(new Date().setHours(new Date().getHours()+3));
 
-  model = new RentalOrder('Iosia','Iosia', this.today,
-    new Date(new Date(new Date().setDate(new Date().getDate() + 1)).setHours(new Date().getHours()+3)),
-    '08:00', '21:00')
+  model: RentalOrder = {
+    pickLocation: 'Iosia',
+    leaveLocation: 'Iosia',
+    pickDate: this.today,
+    leaveDate:  new Date(new Date(new Date().setDate(new Date().getDate() + 1)).setHours(new Date().getHours()+3)),
+    pickTime: '08:00',
+    leaveTime: '21:00'
+  }
 
   constructor(
     private orderService: OrderService,

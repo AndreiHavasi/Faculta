@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AccountService } from "../../../services/account.service";
-import { Account } from "../../../classes/account";
+import { Account } from "../../../models/account";
 import { Subject, takeUntil } from "rxjs";
 import { AuthService } from "../../../services/auth.service";
 import { MatDialog } from '@angular/material/dialog';
@@ -55,7 +55,11 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-    let account: Account = new Account(this.username.value, this.password.value, true);
+    let account: Account = {
+      username: this.username.value,
+      password: this.password.value,
+      loggedIn: true
+    }
 
     if(this.loginForm.valid) {
       this.login(account);

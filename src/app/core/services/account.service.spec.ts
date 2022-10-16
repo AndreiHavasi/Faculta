@@ -4,7 +4,7 @@ import { AccountService } from './account.service';
 import { TestScheduler } from "rxjs/testing";
 import { HttpClient } from "@angular/common/http";
 import { of } from "rxjs";
-import { Account } from "../classes/account";
+import { Account } from "../models/account";
 import { addMatchers, hot, initTestScheduler } from "jasmine-marbles";
 import { TestObservable } from "jasmine-marbles/src/test-observables";
 

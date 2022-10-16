@@ -5,7 +5,7 @@
   <div class="mt-5 mb-5">{{orders[orders.length-1] | json}}</div>
   <div *ngFor="let car of availableCars" class="row pb-5">
     <div  class="col-sm-4 no-padding">
-      <img class="w-100" [alt]="car.name" [src]="car.url">
+      <img class="w-100" [alt]="car.name" [src]="carImage(car.name)">
     </div>
     <div  class="col-sm-8 d-flex no-padding car-details">
       <p class="text-uppercase md-text mt-3 ms-3">{{car.name}}</p>

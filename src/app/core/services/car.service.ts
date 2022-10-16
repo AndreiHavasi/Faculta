@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Car } from "../classes/car";
+import { Car } from "../models/car";
 import { Observable, of } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
+import { environment } from "../../../environments/environment";
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { catchError, tap } from "rxjs/operators";
 })
 export class CarService {
 
-  private carsUrl = 'api/cars';
+  private carsUrl = environment.apiUrl + '/cars';
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
@@ -30,10 +31,9 @@ export class CarService {
 
   /** PUT: update car on mock server */
   putCar(car: Car): Observable<any> {
-    const carUrl = this.carsUrl + '/' + car.id;
-    return this.http.put(carUrl, car, this.httpOptions)
+    return this.http.put(this.carsUrl, car, this.httpOptions)
       .pipe(
-        tap(_ => console.log(`updated car id=${car.id}`)),
+        tap(_ => console.log(`updated car id=${car._id}`)),
         catchError(this.handleError<any>('putCar'))
       )
   }

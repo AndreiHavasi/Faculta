@@ -6,7 +6,7 @@
            (mousedown)="mousedown($event)" (mousemove)="mousemove($event)">
         <div *ngFor="let car of cars.concat(cars)">
           <div class="car-wrapper">
-            <img class="w-100" [alt]="car.name" [src]="car.url">
+            <img class="w-100" [alt]="car.name" [src]="carImage(car.name)">
             <div class="car-description p-4">
               <p class="lg-text fw-bold">{{car.name}}<p>
               <div class="car-details">

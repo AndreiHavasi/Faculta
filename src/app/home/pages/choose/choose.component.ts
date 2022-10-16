@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from "../../../core/services/car.service";
 import { OrderService } from "../../../core/services/order.service";
-import { RentalOrder } from "../../../core/classes/rental-order";
-import { Car } from "../../../core/classes/car";
+import { RentalOrder } from "../../../core/models/rental-order";
+import { Car } from "../../../core/models/car";
 import { Router } from "@angular/router";
 import { combineLatest, Observable, Subject, takeUntil } from "rxjs";
 import { LoadingService } from "../../../core/services/loading.service";
@@ -68,10 +68,23 @@ export class ChooseComponent implements OnInit {
     const lastOrder: RentalOrder = (this.orders)[this.orders.length - 1];
     car.pickDate.push(lastOrder.pickDate);
     car.leaveDate.push(lastOrder.leaveDate);
-    car.pickTime.push(lastOrder.pickLocation);
-    car.leaveTime.push(lastOrder.pickTime);
+    car.pickTime.push(lastOrder.pickTime);
+    car.leaveTime.push(lastOrder.leaveTime);
 
     this.carService.putCar(car).subscribe(() => this.router.navigateByUrl('/home'));
+  }
+
+  carImage(carName: string): string {
+    switch(carName) {
+      case 'Volkswagen Polo':
+        return '../../../../assets/images/polo.jpg'
+      case 'Skoda Octavia':
+        return '../../../../assets/images/skoda.jpg'
+      case 'Mercedes GLE':
+        return '../../../../assets/images/gle.jpg'
+      default:
+        return ''
+    }
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CarService } from "../../../core/services/car.service";
-import { Car } from "../../../core/classes/car";
+import { Car } from "../../../core/models/car";
 import { Subject, takeUntil } from "rxjs";
 
 @Component({
@@ -32,6 +32,19 @@ export class CarsComponent implements OnInit {
     this.carService.getCars()
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(cars => this.cars = cars);
+  }
+
+  carImage(carName: string): string {
+    switch(carName) {
+      case 'Volkswagen Polo':
+        return '../../../../assets/images/polo.jpg'
+      case 'Skoda Octavia':
+        return '../../../../assets/images/skoda.jpg'
+      case 'Mercedes GLE':
+        return '../../../../assets/images/gle.jpg'
+      default:
+        return ''
+    }
   }
 
   /** DRAGGABLE CAROUSEL **/
