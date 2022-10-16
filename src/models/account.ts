@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 export interface IAccount {
   username: string,
   password: string,
-  loggedIn: boolean,
-  id: number
+  loggedIn: boolean
 }
 
 const AccountSchema = new mongoose.Schema({
@@ -18,10 +17,6 @@ const AccountSchema = new mongoose.Schema({
   },
   loggedIn: {
     type: Boolean,
-    required: true
-  },
-  id: {
-    type: Number,
     required: true
   }
 });

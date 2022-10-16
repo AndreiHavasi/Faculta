@@ -38,7 +38,7 @@ const OrderSchema = new mongoose.Schema({
   },
   carId: {
     type: String,
-    required: true
+    required: false
   },
   description: {
     type: String,

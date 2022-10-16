@@ -9,8 +9,7 @@ export interface ICar {
   pickDate: Date[],
   leaveDate: Date[],
   pickTime: string[],
-  leaveTime: string[],
-  id: number
+  leaveTime: string[]
 }
 
 const CarSchema = new mongoose.Schema({
@@ -48,10 +47,6 @@ const CarSchema = new mongoose.Schema({
   },
   leaveTime: {
     type: [String],
-    required: true
-  },
-  id: {
-    type: Number,
     required: true
   }
 });
