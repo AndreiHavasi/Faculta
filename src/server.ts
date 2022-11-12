@@ -4,14 +4,18 @@ import morgan from 'morgan';
 import routes from './routes/routes';
 import mongoose from 'mongoose';
 
-require("dotenv").config();
+require('dotenv').config();
 
 const app: Express = express();
-mongoose.connect(process.env.MONGO_URI!, {
-  autoIndex: true
-}, () => {
-  console.log('Connected to MongoDB');
-});
+mongoose.connect(
+  process.env.MONGO_URI!,
+  {
+    autoIndex: true,
+  },
+  () => {
+    console.log('Connected to MongoDB');
+  }
+);
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -31,7 +35,7 @@ app.use('/', routes);
 app.use((req, res, next) => {
   const error = new Error('not found');
   return res.status(404).json({
-    message: error.message
+    message: error.message,
   });
 });
 

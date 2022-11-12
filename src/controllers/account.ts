@@ -1,43 +1,41 @@
 import { Request, Response } from 'express';
 import Account, { IAccount } from '../models/account';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-const getAccounts = async(request: Request, response: Response) => {
+require('dotenv').config();
+
+const getAccounts = async (request: Request, response: Response) => {
   try {
     const result = await Account.find();
 
     return response.status(200).json(result);
-  }
-  catch (err) {
+  } catch (err) {
     return response.status(500).json(err);
   }
-}
+};
 
-const addAccount = async(request: Request, response: Response) => {
+const addAccount = async (request: Request, response: Response) => {
   try {
     const account = new Account(request.body as IAccount);
     const result = await Account.create(account);
 
     return response.status(200).json(result);
-  }
-  catch (err) {
+  } catch (err) {
     return response.status(500).json(err);
   }
-}
+};
 
-const updateAccount = async(request: Request, response: Response) => {
+const updateAccount = async (request: Request, response: Response) => {
   try {
-    const result = await Account
-      .findByIdAndUpdate(
-        request.body._id,
-        {
-          loggedIn: request.body.loggedIn
-        });
+    const result = await Account.findByIdAndUpdate(request.body._id, {
+      loggedIn: request.body.loggedIn,
+    });
 
     return response.status(200).json(result);
-  }
-  catch (err) {
+  } catch (err) {
     return response.status(500).json(err);
   }
-}
+};
 
 export default { getAccounts, addAccount, updateAccount };
