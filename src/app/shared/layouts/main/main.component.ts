@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { AuthService } from "../../../core/services/auth.service";
+import { TokenService } from "../../../core/services/token.service";
 
 @Component({
   selector: 'app-main',
@@ -11,14 +11,14 @@ export class MainComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private tokenService: TokenService
   ) { }
 
   ngOnInit(): void {
   }
 
   public logout() {
-    this.authService.logout();
+    this.tokenService.logout();
   }
 
 }

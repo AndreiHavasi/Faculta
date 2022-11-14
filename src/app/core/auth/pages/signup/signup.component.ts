@@ -33,8 +33,6 @@ export class SignupComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getAccounts();
-
     this.signupForm = this.formBuilder.group({
       username : [
         '',
@@ -73,40 +71,6 @@ export class SignupComponent implements OnInit {
 
   get passwordConfirm() {
     return this.signupForm.get('passwordConfirm')!;
-  }
-
-  onSubmit(): void {
-    this.submitted = true;
-    let account: Account = {
-      username: this.username.value,
-      password: this.password.value,
-      loggedIn: true
-    }
-
-    if(this.signupForm.valid) {
-      this.signup(account);
-    }
-    else {
-      console.log('oof la signup');
-    }
-  }
-
-  private signup(account: Account): void {
-    if(this.accountIsUnique(account))
-      this.accountService.postAccount(account)
-        .pipe(takeUntil(this.componentDestroyed$))
-        .subscribe(() => this.authService.login());
-    else this.signupModal();
-  }
-
-  private accountIsUnique(newAccount: Account): boolean {
-    return !this.accounts.some(account => account.username == newAccount.username);
-  }
-
-  private getAccounts(): void {
-    this.accountService.getAccounts()
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(accounts => this.accounts = accounts);
   }
 
   private signupModal(): void {

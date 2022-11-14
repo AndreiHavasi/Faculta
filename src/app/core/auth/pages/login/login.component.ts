@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AccountService } from "../../../services/account.service";
 import { Account } from "../../../models/account";
-import { Subject, takeUntil } from "rxjs";
+import { Subject } from "rxjs";
 import { AuthService } from "../../../services/auth.service";
 import { MatDialog } from '@angular/material/dialog';
 import { LoginModalComponent } from "../../modals/login-modal/login-modal.component";
+import { TokenService } from "../../../services/token.service";
 
 @Component({
   selector: 'app-login',
@@ -27,12 +28,14 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private accountService: AccountService,
     private authService: AuthService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit(): void {
-    this.getAccounts();
-
+    if (this.tokenService.getAccessToken()) {
+      this.router.navigate(['/home']);
+    }
     this.loginForm = this.formBuilder.group({
       username : ['', Validators.required],
       password: ['', Validators.required]
@@ -52,50 +55,9 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password')!;
   }
 
-
-  onSubmit(): void {
-    this.submitted = true;
-    let account: Account = {
-      username: this.username.value,
-      password: this.password.value,
-      loggedIn: true
-    }
-
-    if(this.loginForm.valid) {
-      this.login(account);
-    }
-    else {
-      console.log('oof la login');
-    }
-  }
-
-  private login(account: Account): void {
-    const signedUpAccount = this.accountIsSignedUp(account);
-    if (signedUpAccount != undefined) {
-      if (LoginComponent.passwordIsValid(account, signedUpAccount)) {
-        signedUpAccount.loggedIn = true;
-        this.accountService.putAccount(signedUpAccount)
-          .pipe(takeUntil(this.componentDestroyed$))
-          .subscribe(() => this.authService.login());
-      }
-      else this.loginModal();
-    }
-    else this.loginModal();
-
-  }
-
-  private accountIsSignedUp(loggingAccount: Account): Account | undefined {
-    return this.accounts.find(account => account.username == loggingAccount.username);
-  }
-
-  private static passwordIsValid(loggingAccount: Account, signedUpAccount: Account): boolean {
-    return loggingAccount.password == signedUpAccount.password;
-  }
-
-  private getAccounts(): void {
-    this.accountService.getAccounts()
-      .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(accounts => this.accounts = accounts);
+  onLogin() {
+    this.authService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value);
+    this.loginForm.reset();
   }
 
   private loginModal(): void {

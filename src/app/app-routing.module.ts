@@ -8,13 +8,13 @@ import { ChooseComponent } from "./home/pages/choose/choose.component";
 import { LoginComponent } from "./core/auth/pages/login/login.component";
 import { SignupComponent } from "./core/auth/pages/signup/signup.component";
 import { AccountComponent} from "./home/pages/account/account.component";
-import { AuthGuardService } from "./core/services/auth-guard.service";
+import { AuthGuard } from "./core/guards/auth.guard";
 import { MainComponent } from "./shared/layouts/main/main.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: '', canActivate: [AuthGuardService], component: MainComponent,
+  { path: '', canActivate: [AuthGuard], component: MainComponent,
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'about', component: AboutComponent },

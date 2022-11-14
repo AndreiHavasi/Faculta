@@ -1,42 +1,34 @@
 import { Injectable } from '@angular/core';
-import { AccountService } from "./account.service";
-import { Account } from "../models/account";
+import { TokenService } from "./token.service";
 import { Router } from "@angular/router";
-import { map } from "rxjs";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { throwError } from "rxjs";
+import { environment } from "../../../environments/environment";
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor(private http: HttpClient, private tokenService: TokenService, private router: Router) {}
 
-  public authedAccount: Account = { username: '', password: '', loggedIn: false };
+  invalidCredentials = false;
 
-  constructor(
-    private accountService: AccountService,
-    private router: Router
-  ) { }
+  login(username: string, password: string) {
+    const body = new HttpParams().set('username', username).set('password', password);
 
-  public isAuth(): boolean {
-    return this.authedAccount.loggedIn;
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    return this.http.post(`${environment.apiUrl}/users/login`, body, { headers, responseType: 'json' }).subscribe({
+      next: (response: any) => {
+        this.tokenService.saveAccessToken(response['token']);
+        this.router.navigate(['/home']);
+        this.invalidCredentials = false;
+      },
+      error: (err) => {
+        this.invalidCredentials = true;
+        throwError(err);
+      },
+    });
   }
-
-  public login() {
-    let authedAccount: Account;
-    this.accountService.getAccounts().pipe(
-      map(accounts => {
-        authedAccount = accounts.filter(account => AccountService.isAccountLoggedIn(account))[0];
-      })
-    ).subscribe(() => {
-        this.authedAccount = { username: authedAccount.username, password: authedAccount.password, loggedIn: true, _id: authedAccount._id };
-        this.router.navigateByUrl('/home');
-      }
-    );
-  }
-
-  public logout() {
-    this.authedAccount.loggedIn = false;
-    this.accountService.putAccount(this.authedAccount).subscribe(() => this.router.navigateByUrl('/login'));
-  }
-
 }
+

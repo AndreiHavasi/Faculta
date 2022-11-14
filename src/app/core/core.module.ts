@@ -9,7 +9,10 @@ import { SignupModalComponent } from "./auth/modals/signup-modal/signup-modal.co
 
 import { LoginComponent } from "./auth/pages/login/login.component";
 import { SignupComponent } from "./auth/pages/signup/signup.component";
-import { NetworkInterceptor } from "./services/network.interceptor";
+import { NetworkInterceptor } from "./interceptors/network.interceptor";
+import { AuthInterceptor } from "./interceptors/auth.interceptor";
+import { TokenService } from "./services/token.service";
+import { AuthGuard } from "./guards/auth.guard";
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { NetworkInterceptor } from "./services/network.interceptor";
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'ro' },
-    {provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    TokenService,
+    AuthGuard
   ],
 })
 export class CoreModule {
