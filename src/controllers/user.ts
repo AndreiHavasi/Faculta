@@ -20,7 +20,7 @@ const addUser = async (request: Request, response: Response) => {
       role,
     });
 
-    user.token = jwt.sign({ id: user._id }, process.env.TOKEN_KEY!, { expiresIn: 86400 * 7 });
+    user.token = jwt.sign({ id: user._id, username: user.username }, process.env.TOKEN_KEY!, { expiresIn: 86400 * 7 });
     await user.save();
 
     return response.status(200).json(user);
@@ -42,7 +42,7 @@ const login = async (request: Request, response: Response) => {
       return response.status(403).json({ message: 'Invalid password' });
     }
 
-    user.token = jwt.sign({ id: user._id }, process.env.TOKEN_KEY!, { expiresIn: 86400 * 7 });
+    user.token = jwt.sign({ id: user._id, username: user.username }, process.env.TOKEN_KEY!, { expiresIn: 86400 * 7 });
     await user.save();
 
     return response.status(200).json(user);
