@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Account } from "../../../core/models/account";
+import jwt_decode from 'jwt-decode';
+import { TokenService } from "../../../core/services/token.service";
 
 @Component({
   selector: 'app-account',
@@ -8,10 +9,14 @@ import { Account } from "../../../core/models/account";
 })
 export class AccountComponent implements OnInit {
 
-  account: Account = { username: '', password: '', loggedIn: true };
+  username!: string;
+  decodedToken: any;
 
-  constructor() { }
+  constructor(private tokenService: TokenService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.decodedToken = jwt_decode(this.tokenService.getAccessToken()!);
+    this.username = this.decodedToken.username;
+  }
 
 }
