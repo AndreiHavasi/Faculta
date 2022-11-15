@@ -7,7 +7,6 @@ export interface IUser {
   username: string;
   password: string;
   role: Role;
-  token?: string;
 }
 
 const UserSchema = new mongoose.Schema({
@@ -23,10 +22,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: roles,
-  },
-  token: {
-    type: String,
-    required: false,
   },
 });
 
