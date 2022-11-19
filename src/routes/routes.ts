@@ -2,17 +2,19 @@ import express from 'express';
 import UserController from '../controllers/user';
 import CarController from '../controllers/car';
 import OrderController from '../controllers/order';
-import auth from '../middleware/auth';
+import verifyAccessToken from '../middleware/verifyAccessToken';
 
 const router = express.Router();
 
 router.post('/users/register', UserController.addUser);
 router.post('/users/login', UserController.login);
+router.post('/users/logout', UserController.logout);
+router.post('/users/refresh-token', UserController.handleRefreshToken);
 
-router.get('/orders', auth, OrderController.getOrders);
-router.post('/orders', auth, OrderController.addOrder);
+router.get('/orders', verifyAccessToken, OrderController.getOrders);
+router.post('/orders', verifyAccessToken, OrderController.addOrder);
 
-router.get('/cars', auth, CarController.getCars);
-router.put('/cars', auth, CarController.updateCar);
+router.get('/cars', verifyAccessToken, CarController.getCars);
+router.put('/cars', verifyAccessToken, CarController.updateCar);
 
 export = router;

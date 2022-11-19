@@ -3,13 +3,13 @@ import jwt from 'jsonwebtoken';
 
 const config = process.env;
 
-const verifyToken = (request: Request, response: Response, next: NextFunction) => {
+const verifyAccessToken = (request: Request, response: Response, next: NextFunction) => {
   const bearerHeader = request.headers['authorization'];
   if (typeof bearerHeader !== 'undefined') {
     const bearer = bearerHeader.split(' ');
-    request.headers['token'] = bearer[1];
+    request.headers['accessToken'] = bearer[1];
 
-    jwt.verify(request.headers['token'], config.TOKEN_KEY!, (err) => {
+    jwt.verify(request.headers['accessToken'], config.ACCESS_TOKEN_SECRET!, (err) => {
       if (err) {
         response.status(500).json({ message: 'Invalid token' });
       } else {
@@ -21,4 +21,4 @@ const verifyToken = (request: Request, response: Response, next: NextFunction) =
   }
 };
 
-export default verifyToken;
+export default verifyAccessToken;
