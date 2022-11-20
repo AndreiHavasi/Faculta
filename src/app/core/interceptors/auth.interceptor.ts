@@ -26,7 +26,6 @@ export class AuthInterceptor implements HttpInterceptor {
         return throwError(message);
       } else if (res instanceof HttpErrorResponse && message === 'Invalid token')
         return this.handleRefreshToken(request, next);
-
       else {
         return throwError(res);
       }
@@ -43,8 +42,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private handleRefreshToken(request: HttpRequest<any>, next: HttpHandler) {
     return this.tokenService.refreshAccessToken().pipe(
-      switchMap((token) => {
-        return next.handle(this.addTokenHeader(request,token));
+      switchMap((res) => {
+        return next.handle(this.addTokenHeader(request, res['accessToken']));
       }));
   }
 }

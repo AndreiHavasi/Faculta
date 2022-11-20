@@ -18,7 +18,7 @@ export class MainComponent implements OnInit {
   }
 
   public logout() {
-    this.tokenService.logout();
+    this.tokenService.logout().subscribe();
   }
 
 }

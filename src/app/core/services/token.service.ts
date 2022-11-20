@@ -12,11 +12,9 @@ export class TokenService {
   constructor(private router: Router, private http: HttpClient) { }
 
   logout() {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
     localStorage.clear();
     this.router.navigate(['/login']);
-    return this.http.post(`${environment.apiUrl}/users/logout`, {}, { headers, withCredentials: true });
+    return this.http.post(`${environment.apiUrl}/users/logout`, {}, { withCredentials: true });
   }
 
   public saveAccessToken(token: string) {
