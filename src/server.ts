@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import routes from './routes/routes';
 import mongoose from 'mongoose';
 
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
@@ -22,17 +23,14 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-  res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT');
-    return res.status(200).json({});
-  }
-  next();
-});
+app.use(
+  cors({
+    origin: 'http://localhost:4200',
+    credentials: true,
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS'],
+    optionsSuccessStatus: 204,
+  })
+);
 
 app.use('/', routes);
 app.use((req, res, next) => {
