@@ -1,24 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Router } from "@angular/router";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
+import { tap } from "rxjs/operators";
 
 @Injectable()
 export class TokenService {
 
-  private TOKEN_KEY = 'token';
+  private ACCESS_TOKEN_KEY = 'accessToken';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
-  logout(): Promise<boolean> {
+  logout() {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
     localStorage.clear();
-    return this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
+    return this.http.post(`${environment.apiUrl}/users/logout`, {}, { headers, withCredentials: true });
   }
 
   public saveAccessToken(token: string) {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.setItem(this.TOKEN_KEY, token);
+    localStorage.setItem(this.ACCESS_TOKEN_KEY, token);
   }
 
   public getAccessToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    return localStorage.getItem(this.ACCESS_TOKEN_KEY);
   }
+
+  refreshAccessToken() {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post(`${environment.apiUrl}/users/refresh-token`, {}, { headers, withCredentials: true }).pipe(tap((res: any) => {
+      this.saveAccessToken(res['accessToken']);
+    }));
+  }
+
 }

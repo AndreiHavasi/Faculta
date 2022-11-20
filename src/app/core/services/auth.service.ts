@@ -18,9 +18,9 @@ export class AuthService {
     const body = new HttpParams().set('username', username).set('password', password);
 
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    return this.http.post(`${environment.apiUrl}/users/login`, body, { headers, responseType: 'json' }).subscribe({
+    return this.http.post(`${environment.apiUrl}/users/login`, body, { headers, responseType: 'json', withCredentials: true }).subscribe({
       next: (response: any) => {
-        this.tokenService.saveAccessToken(response['token']);
+        this.tokenService.saveAccessToken(response['accessToken']);
         this.router.navigate(['/home']);
         this.invalidCredentials = false;
       },
