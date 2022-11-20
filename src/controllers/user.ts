@@ -49,13 +49,13 @@ const logout = async (request: Request, response: Response) => {
   const user = await User.findOne({ refreshToken });
   if (!user) {
     response.clearCookie('refreshToken', { httpOnly: true, secure: true, sameSite: 'none' });
-    return response.status(204);
+    return response.status(204).send();
   }
 
   user.refreshToken = '';
   await user.save();
   response.clearCookie('refreshToken', { httpOnly: true, secure: true, sameSite: 'none' });
-  return response.status(204);
+  return response.status(204).send();
 };
 
 const login = async (request: Request, response: Response) => {
