@@ -23,14 +23,14 @@ const addUser = async (request: Request, response: Response) => {
     const accessToken = jwt.sign({ id: user._id, username: user.username }, process.env.ACCESS_TOKEN_SECRET!, {
       expiresIn: '10s',
     });
-    const refreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.REFRESH_TOKEN_SECRET!, {
+    const newRefreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.REFRESH_TOKEN_SECRET!, {
       expiresIn: '1d',
     });
-    user.refreshToken = refreshToken;
+    user.refreshToken = [newRefreshToken];
     await user.save();
 
     return (
-      response.cookie('refreshToken', refreshToken, {
+      response.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
@@ -44,18 +44,20 @@ const addUser = async (request: Request, response: Response) => {
 
 const logout = async (request: Request, response: Response) => {
   const cookies = request.cookies;
-  if (!cookies?.refreshToken) return response.status(204);
+  if (!cookies?.refreshToken) return response.status(204).end();
   const refreshToken = cookies.refreshToken;
+
   const user = await User.findOne({ refreshToken });
   if (!user) {
     response.clearCookie('refreshToken', { httpOnly: true, secure: true, sameSite: 'none' });
-    return response.status(204).send();
+    return response.status(204).end();
   }
 
-  user.refreshToken = '';
+  user.refreshToken = user.refreshToken!.filter((rt) => rt !== refreshToken);
   await user.save();
+
   response.clearCookie('refreshToken', { httpOnly: true, secure: true, sameSite: 'none' });
-  return response.status(204).send();
+  return response.status(204).end();
 };
 
 const login = async (request: Request, response: Response) => {
@@ -74,14 +76,14 @@ const login = async (request: Request, response: Response) => {
     const accessToken = jwt.sign({ id: user._id, username: user.username }, process.env.ACCESS_TOKEN_SECRET!, {
       expiresIn: '10s',
     });
-    const refreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.REFRESH_TOKEN_SECRET!, {
+    const newRefreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.REFRESH_TOKEN_SECRET!, {
       expiresIn: '1d',
     });
-    user.refreshToken = refreshToken;
+    user.refreshToken!.push(newRefreshToken);
     await user.save();
 
     return (
-      response.cookie('refreshToken', refreshToken, {
+      response.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
@@ -97,18 +99,47 @@ const handleRefreshToken = async (request: Request, response: Response) => {
   const cookies = request.cookies;
   if (!cookies?.refreshToken) return response.status(401).json({ message: 'No refresh token' });
   const refreshToken = cookies.refreshToken;
-  const user = await User.findOne({ refreshToken });
-  if (!user) return response.status(403).json({ message: 'Invalid refresh token' });
+  response.clearCookie('refreshToken', { httpOnly: true, sameSite: 'none', secure: true });
 
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!, (error: any, decoded: any) => {
+  const user = await User.findOne({ refreshToken });
+  if (!user) {
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!, async (error: any, decoded: any) => {
+      if (error) return response.status(403).json({ message: 'Invalid reused refresh token' });
+      const hackedUser = await User.findOne({ username: decoded.username });
+      hackedUser!.refreshToken = [];
+      await hackedUser!.save();
+    });
+    return response.status(403).json({ message: 'Valid reused refresh token' });
+  }
+
+  const updatedRefreshTokenArr = user.refreshToken!.filter((rt) => rt !== refreshToken);
+
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!, async (error: any, decoded: any) => {
+    if (error) {
+      user.refreshToken = [...updatedRefreshTokenArr];
+      await user.save();
+    }
     if (error || user.username != decoded.username) {
       return response.status(403).json({ message: 'Invalid refresh token' });
     }
 
     const accessToken = jwt.sign({ id: user._id, username: user.username }, process.env.ACCESS_TOKEN_SECRET!, {
-      expiresIn: 10,
+      expiresIn: '10s',
     });
-    return response.status(200).json({ accessToken });
+    const newRefreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.REFRESH_TOKEN_SECRET!, {
+      expiresIn: '1d',
+    });
+    user.refreshToken = [...updatedRefreshTokenArr, newRefreshToken];
+    await user.save();
+
+    return (
+      response.cookie('refreshToken', newRefreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        maxAge: 1000 * 60 * 60 * 24,
+      }) && response.status(201).json({ accessToken })
+    );
   });
 };
 

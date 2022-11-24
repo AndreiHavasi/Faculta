@@ -7,7 +7,7 @@ export interface IUser {
   username: string;
   password: string;
   role: Role;
-  refreshToken?: string;
+  refreshToken?: string[];
 }
 
 const UserSchema = new mongoose.Schema({
@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
     enum: roles,
   },
   refreshToken: {
-    type: String,
+    type: [String],
     required: false,
   },
 });
