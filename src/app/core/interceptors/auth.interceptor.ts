@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(catchError(res => {
       const message = res.error.message;
       if (res instanceof HttpErrorResponse && message === 'Invalid refresh token') {
-        this.tokenService.logout();
+        this.tokenService.logout().subscribe();
         return throwError(message);
       } else if (res instanceof HttpErrorResponse && message === 'Invalid token')
         return this.handleRefreshToken(request, next);

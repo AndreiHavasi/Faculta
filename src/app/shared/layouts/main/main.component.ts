@@ -17,8 +17,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public logout() {
-    this.router.navigate(['/login']);
+  logout() {
     this.tokenService.logout().subscribe();
   }
 

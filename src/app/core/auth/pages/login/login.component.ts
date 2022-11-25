@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Account } from "../../../models/account";
-import { Subject } from "rxjs";
+import { Subject, throwError } from "rxjs";
 import { AuthService } from "../../../services/auth.service";
 import { MatDialog } from '@angular/material/dialog';
 import { LoginModalComponent } from "../../modals/login-modal/login-modal.component";
@@ -54,7 +54,17 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.authService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value);
+    this.authService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe({
+      next: (response: any) => {
+        this.tokenService.saveAccessToken(response['accessToken']);
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        if([401, 403].includes(err.status))
+          this.loginModal();
+        throwError(err);
+      },
+    });
     this.loginForm.reset();
   }
 

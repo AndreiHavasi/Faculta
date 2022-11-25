@@ -13,7 +13,9 @@ export class TokenService {
 
   logout() {
     localStorage.clear();
-    return this.http.post(`${environment.apiUrl}/users/logout`, {}, { withCredentials: true });
+    return this.http.post(`${environment.apiUrl}/users/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => this.router.navigate(['/login']))
+    );
   }
 
   public saveAccessToken(token: string) {
