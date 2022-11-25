@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="row d-flex justify-content-center">
-    <form class="card col-sm-4 md-text" [formGroup]="signupForm">
+    <form class="card col-sm-4 md-text" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div class="w-75 ms-auto me-auto">
         <h1 class="fw-normal">Creeaza cont</h1>
 

@@ -18,6 +18,7 @@ export class MainComponent implements OnInit {
   }
 
   public logout() {
+    this.router.navigate(['/login']);
     this.tokenService.logout().subscribe();
   }
 

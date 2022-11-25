@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AccountService } from "../../../services/account.service";
 import { Account } from "../../../models/account";
-import { Subject, takeUntil } from "rxjs";
+import { Subject, takeUntil, throwError } from "rxjs";
 import { AuthService } from "../../../services/auth.service";
 import { passwordValidator } from "../../validators/password.validator";
 import { passwordConfirmValidator } from "../../validators/password-confirm.validator";
 import { MatDialog } from "@angular/material/dialog";
 import { SignupModalComponent } from "../../modals/signup-modal/signup-modal.component";
+import { TokenService } from "../../../services/token.service";
 
 @Component({
   selector: 'app-signup',
@@ -27,9 +27,9 @@ export class SignupComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private accountService: AccountService,
     private authService: AuthService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit(): void {
@@ -71,6 +71,38 @@ export class SignupComponent implements OnInit {
 
   get passwordConfirm() {
     return this.signupForm.get('passwordConfirm')!;
+  }
+
+  onSubmit(): void {
+    this.submitted = true;
+    const account: Account = {
+      username: this.username.value,
+      password: this.password.value,
+      role: 'client'
+    }
+
+    if(this.signupForm.valid) {
+      this.signup(account);
+    }
+    else {
+      console.log('oof la signup');
+    }
+  }
+
+  private signup(account: Account): void {
+    this.authService.register(account)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe({
+        next: (response: any) => {
+          this.tokenService.saveAccessToken(response['accessToken']);
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          if(err.status == 409)
+            this.signupModal();
+          throwError(err);
+        },
+      });
   }
 
   private signupModal(): void {

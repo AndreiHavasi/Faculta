@@ -13,7 +13,6 @@ export class TokenService {
 
   logout() {
     localStorage.clear();
-    this.router.navigate(['/login']);
     return this.http.post(`${environment.apiUrl}/users/logout`, {}, { withCredentials: true });
   }
 
