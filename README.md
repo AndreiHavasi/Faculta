@@ -8,16 +8,16 @@
 
 ## Features
 
-- modals 🗨
-- template form 📄
-- reactive forms 📜
-- form validators ☑
-- draggable carousel 🎠
-- route guarding 🛡 
-- loading spinners 🔁
-- usage of JWT for authorization 🔓
-- dynamic component for ads 📣
-- and of course renting a car 🚗💨
+- 🗨 modals
+- 📄 template form
+- 📜 reactive forms
+- ☑ form validators
+- 🎠 draggable carousel
+- 🛡 route guarding 
+- 🔁 loading spinners
+- 🔓 usage of JWT for authorization
+- 📣 dynamic component for ads
+- 🚗💨 and of course renting a car
 
 ## Preview
 
