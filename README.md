@@ -8,6 +8,6 @@
 
 ## Features
 
-- password hashing 🤫
-- usage of access tokens with refresh token rotation 🔓🔃
-- and of course supporting renting cars 🚗💨
+- 🤫#️⃣ password hashing
+- 🔓🔃 usage of access tokens with refresh token rotation
+- 🚗💨 and of course supporting renting cars
