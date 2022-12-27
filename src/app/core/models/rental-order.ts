@@ -5,6 +5,8 @@ export interface RentalOrder {
   leaveDate: Date;
   pickTime: string;
   leaveTime: string;
+  carId: string;
+  userId: string;
   description?: string;
-  _id?: number;
+  _id?: string;
 }

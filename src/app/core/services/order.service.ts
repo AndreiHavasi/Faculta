@@ -19,7 +19,6 @@ export class OrderService {
     private http: HttpClient
   ) { }
 
-  /** GET: get orders from mock server */
   getOrders(): Observable<RentalOrder[]> {
     return this.http.get<RentalOrder[]>(this.ordersUrl)
       .pipe(
@@ -28,12 +27,29 @@ export class OrderService {
       )
   }
 
-  /** POST: send order to mock server */
   postOrder(order: RentalOrder): Observable<RentalOrder> {
     return this.http.post<RentalOrder>(this.ordersUrl, order, this.httpOptions).pipe(
       tap((newOrder: RentalOrder) => console.log(`posted order with pick time=${newOrder.pickTime}`)),
       catchError(this.handleError<RentalOrder>('postOrder'))
     );
+  }
+
+  patchOrder(order: RentalOrder): Observable<RentalOrder> {
+    return this.http.patch<RentalOrder>(this.ordersUrl, order, this.httpOptions).pipe(
+      tap((newOrder: RentalOrder) => console.log(`patched order with pick time=${newOrder.pickTime}`)),
+      catchError(this.handleError<RentalOrder>('postOrder'))
+    );
+  }
+
+  deleteOrder(order: RentalOrder): any {
+    const options = {
+      ...this.httpOptions,
+      body: order
+    }
+    return this.http.delete<RentalOrder>(this.ordersUrl, options)
+      .pipe(
+        catchError(this.handleError<RentalOrder>('deleteOrder'))
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -20,7 +20,6 @@ export class CarService {
     private http: HttpClient
   ) { }
 
-  /** GET: get cars from mock server */
   getCars(): Observable<Car[]> {
     return this.http.get<Car[]>(this.carsUrl)
       .pipe(
@@ -29,7 +28,6 @@ export class CarService {
       )
   }
 
-  /** PUT: update car on mock server */
   putCar(car: Car): Observable<any> {
     return this.http.put(this.carsUrl, car, this.httpOptions)
       .pipe(

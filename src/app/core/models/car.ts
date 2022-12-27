@@ -8,5 +8,5 @@ export interface Car {
   leaveDate: Date[];
   pickTime: string[];
   leaveTime: string[];
-  _id?: number;
+  _id: string;
 }

@@ -5,6 +5,8 @@ import { Router } from "@angular/router";
 import { Subject, takeUntil } from "rxjs";
 import { AdService } from "../../../shared/ad/services/ad.service";
 import { AdItem } from "../../../shared/ad/ad-item";
+import { TokenService } from "../../../core/services/token.service";
+import jwt_decode from "jwt-decode";
 
 
 @Component({
@@ -29,13 +31,16 @@ export class HomeComponent implements OnInit {
     pickDate: this.today,
     leaveDate:  new Date(new Date(new Date().setDate(new Date().getDate() + 1)).setHours(new Date().getHours()+3)),
     pickTime: '08:00',
-    leaveTime: '21:00'
+    leaveTime: '21:00',
+    carId: '',
+    userId: (jwt_decode(this.tokenService.getAccessToken()!) as any).id
   }
 
   constructor(
     private orderService: OrderService,
     private router: Router,
-    private adService: AdService
+    private adService: AdService,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit(): void {

@@ -4,7 +4,7 @@ import { OrderService } from "../../../core/services/order.service";
 import { RentalOrder } from "../../../core/models/rental-order";
 import { Car } from "../../../core/models/car";
 import { Router } from "@angular/router";
-import { combineLatest, Observable, Subject, takeUntil } from "rxjs";
+import { combineLatest, Observable, Subject, switchMap, takeUntil, take } from "rxjs";
 import { LoadingService } from "../../../core/services/loading.service";
 
 @Component({
@@ -19,6 +19,7 @@ export class ChooseComponent implements OnInit {
 
   availableCars: Car[] = [];
   orders: RentalOrder[] = [];
+  orderConfirmed = false;
 
   constructor(
     private loadingService: LoadingService,
@@ -30,8 +31,8 @@ export class ChooseComponent implements OnInit {
   ngOnInit(): void {
 
     combineLatest([
-      this.getCars(),
-      this.getOrders()
+      this.carService.getCars(),
+      this.orderService.getOrders()
     ])
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(value => {
@@ -43,16 +44,9 @@ export class ChooseComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
+    this.orderUnconfirmed();
     this.componentDestroyed$.next(true);
     this.componentDestroyed$.complete();
-  }
-
-  private getCars(): Observable<Car[]> {
-    return this.carService.getCars();
-  }
-
-  private getOrders(): Observable<RentalOrder[]> {
-    return this.orderService.getOrders();
   }
 
   private isCarAvailable(car: Car): boolean {
@@ -71,7 +65,25 @@ export class ChooseComponent implements OnInit {
     car.pickTime.push(lastOrder.pickTime);
     car.leaveTime.push(lastOrder.leaveTime);
 
-    this.carService.putCar(car).subscribe(() => this.router.navigateByUrl('/home'));
+    lastOrder.carId = car._id;
+    this.orderService.patchOrder(lastOrder)
+      .pipe(
+        takeUntil(this.componentDestroyed$),
+        switchMap(() => this.carService.putCar(car))
+      )
+      .subscribe(() => {
+        this.orderConfirmed = true;
+        this.router.navigateByUrl('/home');
+      });
+  }
+
+  orderUnconfirmed() {
+    if(!this.orderConfirmed) {
+      const lastOrder: RentalOrder = (this.orders)[this.orders.length - 1];
+      this.orderService.deleteOrder(lastOrder)
+        .pipe(take(1))
+        .subscribe();
+    }
   }
 
   carImage(carName: string): string {
