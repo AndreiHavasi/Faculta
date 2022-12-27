@@ -1,50 +1,55 @@
 import mongoose from 'mongoose';
 
 export interface IOrder {
-  pickLocation: string,
-  leaveLocation: string,
-  pickDate: Date,
-  leaveDate: Date,
-  pickTime: string,
-  leaveTime: string,
-  carId: string,
-  description?: string
+  pickLocation: string;
+  leaveLocation: string;
+  pickDate: Date;
+  leaveDate: Date;
+  pickTime: string;
+  leaveTime: string;
+  carId: string;
+  userId: string;
+  description?: string;
 }
 
 const OrderSchema = new mongoose.Schema({
   pickLocation: {
     type: String,
-    required: true
+    required: true,
   },
   leaveLocation: {
     type: String,
-    required: true
+    required: true,
   },
   pickDate: {
     type: Date,
-    required: true
+    required: true,
   },
   leaveDate: {
     type: Date,
-    required: true
+    required: true,
   },
   pickTime: {
     type: String,
-    required: true
+    required: true,
   },
   leaveTime: {
     type: String,
-    required: true
+    required: true,
   },
   carId: {
     type: String,
-    required: false
+    required: false,
+  },
+  userId: {
+    type: String,
+    required: false,
   },
   description: {
     type: String,
-    required: false
-  }
+    required: false,
+  },
 });
 
-const Orders = mongoose.model<IOrder>("Order", OrderSchema);
+const Orders = mongoose.model<IOrder>('Order', OrderSchema);
 export default Orders;

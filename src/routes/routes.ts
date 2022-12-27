@@ -13,6 +13,8 @@ router.post('/users/refresh-token', UserController.handleRefreshToken);
 
 router.get('/orders', verifyAccessToken, OrderController.getOrders);
 router.post('/orders', verifyAccessToken, OrderController.addOrder);
+router.patch('/orders', verifyAccessToken, OrderController.updateOrder);
+router.delete('/orders', verifyAccessToken, OrderController.deleteOrder);
 
 router.get('/cars', verifyAccessToken, CarController.getCars);
 router.put('/cars', verifyAccessToken, CarController.updateCar);
