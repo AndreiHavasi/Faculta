@@ -24,7 +24,7 @@ const addOrder = async (request: Request, response: Response) => {
 
 const updateOrder = async (request: Request, response: Response) => {
   try {
-    const result = await Order.findByIdAndUpdate(request.body._id, { carId: request.body.carId });
+    const result = await Order.findByIdAndUpdate(request.body._id, request.body);
 
     return response.status(200).json(result);
   } catch (err) {
