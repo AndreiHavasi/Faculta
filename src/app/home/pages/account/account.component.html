@@ -1,8 +1,31 @@
 <div class="container">
-  <div class="row d-flex mt-5">
-    <div class="col-sm-4 me-auto">
-      <h1>Nume utilizator: </h1>
-      <p class="xl-text">{{ username }}</p>
+  <div class="row mt-5">
+    <h1><b>Informatii cont</b></h1>
+    <p class="md-text"><b>Nume utilizator:</b> {{ username }}</p>
+  </div>
+
+  <div class="row mt-5" *ngIf="presentOrders.length">
+    <h1><b>Inchirieri curente</b></h1>
+    <div *ngFor="let order of presentOrders; let i = index" class="mb-4">
+      <p class="lg-text fw-bold">Inchirierea {{ i + 1 }}</p>
+      <p><b>Masina:</b> {{ getCarName(order.carId )}}</p>
+      <p><b> preluarii:</b> {{ order.pickTime }}</p>
+      <p><b>Data preluarii:</b> {{ moment(order.pickDate).format('DD.MM.YYYY') }}</p>
+      <p><b>Ora predarii:</b> {{ order.leaveTime }}</p>
+      <p><b>Data preluarii:</b> {{ moment(order.pickDate).format('DD.MM.YYYY') }}</p>
+      <button type="button" class="btn btn-danger md-text" (click)="cancelOrder(order)">Anuleaza</button>
+    </div>
+  </div>
+
+  <div class="row mt-5" *ngIf="pastOrders.length">
+    <h1><b>Inchirieri anterioare</b></h1>
+    <div *ngFor="let order of pastOrders; let i = index">
+      <p class="lg-text fw-bold">Inchirierea {{ i + 1 }}</p>
+      <p><b>Masina:</b> {{ getCarName(order.carId )}}</p>
+      <p><b> preluarii:</b> {{ order.pickTime }}</p>
+      <p><b>Data preluarii:</b> {{ moment(order.pickDate).format('DD.MM.YYYY') }}</p>
+      <p><b>Ora predarii:</b> {{ order.leaveTime }}</p>
+      <p><b>Data preluarii:</b> {{ moment(order.pickDate).format('DD.MM.YYYY') }}</p>
     </div>
   </div>
 </div>

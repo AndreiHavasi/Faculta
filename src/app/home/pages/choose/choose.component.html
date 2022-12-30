@@ -2,15 +2,21 @@
 
 <div class="container">
   <h1 class="xxl-text text-center">Alege masina</h1>
-  <div class="mt-5 mb-5">{{orders[orders.length-1] | json}}</div>
-  <div *ngFor="let car of availableCars" class="row pb-5">
-    <div  class="col-sm-4 no-padding">
-      <img class="w-100" [alt]="car.name" [src]="carImage(car.name)">
-    </div>
-    <div  class="col-sm-8 d-flex no-padding car-details">
-      <p class="text-uppercase md-text mt-3 ms-3">{{car.name}}</p>
-      <button type="button" class="btn btn-warning w-25 h-25 mt-auto me-3 mb-3 ms-auto md-text"
-          (click)="rentCar(car)">Inchiriaza</button>
+  <div class="d-flex">
+    <div *ngFor="let car of availableCars">
+      <div class="car-wrapper">
+        <img class="w-100" [alt]="car.name" [src]="carImage(car.name)">
+        <div class="car-description p-4">
+          <p class="lg-text fw-bold">{{car.name}}<p>
+          <div class="car-details">
+            <p class="pe-3 me-3">{{car.seats}} locuri</p>
+            <p class="pe-3 me-3">{{car.engine}}</p>
+            <p class="pe-3 me-3">{{car.transmission}}</p>
+            <p class="me-auto fw-bold car-rent-price">{{car.rate | currency:'EUR':'symbol':'':'en-gb' }} / zi</p>
+          </div>
+          <button type="button" class="btn btn-warning md-text" (click)="rentCar(car)">Inchiriaza</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -4,6 +4,18 @@ mat-progress-spinner {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.car-wrapper {
+  background-color: white;
+  border-radius: .5rem;
+  width: 26rem;
+}
 .car-details {
-  background-color: #0d6efd;
+  display: flex;
+  justify-content: space-evenly;
+}
+.car-details > p:not(:last-child) {
+  border-right: 1px solid #ced4da;
+}
+.car-rent-price::first-letter {
+  padding-right: 0.25rem;
 }

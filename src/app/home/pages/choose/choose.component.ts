@@ -4,7 +4,7 @@ import { OrderService } from "../../../core/services/order.service";
 import { RentalOrder } from "../../../core/models/rental-order";
 import { Car } from "../../../core/models/car";
 import { Router } from "@angular/router";
-import { combineLatest, Observable, Subject, switchMap, takeUntil, take } from "rxjs";
+import { combineLatest, Subject, takeUntil, take } from "rxjs";
 import { LoadingService } from "../../../core/services/loading.service";
 
 @Component({
@@ -51,26 +51,20 @@ export class ChooseComponent implements OnInit {
 
   private isCarAvailable(car: Car): boolean {
     const lastOrder: RentalOrder = (this.orders)[this.orders.length - 1];
-    if(typeof car.pickDate !== undefined)
-      for(let i = 0; i < car.pickDate.length; i ++)
-        if(car.pickDate[i] <= lastOrder.leaveDate && car.leaveDate[i] >= lastOrder.pickDate)
-          return false;
+    const carId = car._id;
+
+    for(let i = 0; i < this.orders.length; i++)
+      if(this.orders[i].carId == carId && this.orders[i].pickDate <= lastOrder.leaveDate && this.orders[i].leaveDate >= lastOrder.pickDate)
+        return false;
     return true;
   }
 
   rentCar(car: Car) {
     const lastOrder: RentalOrder = (this.orders)[this.orders.length - 1];
-    car.pickDate.push(lastOrder.pickDate);
-    car.leaveDate.push(lastOrder.leaveDate);
-    car.pickTime.push(lastOrder.pickTime);
-    car.leaveTime.push(lastOrder.leaveTime);
 
     lastOrder.carId = car._id;
     this.orderService.patchOrder(lastOrder)
-      .pipe(
-        takeUntil(this.componentDestroyed$),
-        switchMap(() => this.carService.putCar(car))
-      )
+      .pipe(takeUntil(this.componentDestroyed$))
       .subscribe(() => {
         this.orderConfirmed = true;
         this.router.navigateByUrl('/home');

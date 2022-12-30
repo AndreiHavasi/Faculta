@@ -1,10 +1,12 @@
 # rent-it-ui
 
-**rent.it - Car Rental Website** built with the ***MEAN*** 😤 stack
+**rent.it - Car Rental Web App** built with the ***MEAN*** 😤 stack
 
-[api repo](https://github.com/Hornflakes/rent-it-api) 
+[api repo](https://github.com/Hornflakes/rent-it-api)
 
-> app is still in development
+###
+
+*codebase is a mess, I was a noob when I made this* 🥴
 
 ## Features
 
