@@ -21,7 +21,7 @@ const addUser = async (request: Request, response: Response) => {
     });
 
     const accessToken = jwt.sign({ id: user._id, username: user.username }, process.env.ACCESS_TOKEN_SECRET!, {
-      expiresIn: '10s',
+      expiresIn: '1h',
     });
     const newRefreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.REFRESH_TOKEN_SECRET!, {
       expiresIn: '1d',
@@ -74,7 +74,8 @@ const login = async (request: Request, response: Response) => {
     }
 
     const accessToken = jwt.sign({ id: user._id, username: user.username }, process.env.ACCESS_TOKEN_SECRET!, {
-      expiresIn: '10s',
+      expiresIn: '1h' +
+        '',
     });
     const newRefreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.REFRESH_TOKEN_SECRET!, {
       expiresIn: '1d',
@@ -124,7 +125,7 @@ const handleRefreshToken = async (request: Request, response: Response) => {
     }
 
     const accessToken = jwt.sign({ id: user._id, username: user.username }, process.env.ACCESS_TOKEN_SECRET!, {
-      expiresIn: '10s',
+      expiresIn: '1h',
     });
     const newRefreshToken = jwt.sign({ id: user._id, username: user.username }, process.env.REFRESH_TOKEN_SECRET!, {
       expiresIn: '1d',
