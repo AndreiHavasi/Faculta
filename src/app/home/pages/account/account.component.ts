@@ -41,7 +41,11 @@ export class AccountComponent implements OnInit {
 
   getCarName(carId: string): string {
     const car = this.cars.find((car) => car._id === carId);
-    return car!.name;
+    if (car) {
+      return car.name;
+    } else {
+      return 'No car found';
+    }
   }
 
   private getOrders() {

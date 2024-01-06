@@ -36,12 +36,17 @@ export class CarsComponent implements OnInit {
 
   carImage(carName: string): string {
     switch(carName) {
-      case 'Volkswagen Polo':
-        return '../../../../assets/images/polo.jpg'
-      case 'Skoda Octavia':
-        return '../../../../assets/images/skoda.jpg'
-      case 'Mercedes GLE':
-        return '../../../../assets/images/gle.jpg'
+      case 'Toyota Corolla':
+        return '../../../../assets/images/corolla.png'
+      case 'Ford F-150':
+        return '../../../../assets/images/f150.png'
+      case 'Honda Civic':
+        return '../../../../assets/images/honda.png'
+      case 'Tesla Model 3':
+        return '../../../../assets/images/tesla.png'
+      case 'Volkswagen Golf GTI':
+        return '../../../../assets/images/gti.png'
+
       default:
         return ''
     }

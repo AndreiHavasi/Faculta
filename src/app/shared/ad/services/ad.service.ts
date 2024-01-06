@@ -17,7 +17,7 @@ export class AdService {
       ),
       new AdItem(
         CarAdComponent,
-        {name: 'Tigaie', url: '../assets/images/bmw.jpg', price:'2000 €'}
+        {name: 'BMW E46', url: '../assets/images/bmw.jpg', price:'2000 €'}
       ),
       new AdItem(
         CarAdComponent,

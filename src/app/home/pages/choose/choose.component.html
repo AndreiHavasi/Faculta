@@ -2,17 +2,18 @@
 
 <div class="container">
   <h1 class="xxl-text text-center">Alege masina</h1>
-  <div class="d-flex">
-    <div *ngFor="let car of availableCars">
-      <div class="car-wrapper">
-        <img class="w-100" [alt]="car.name" [src]="carImage(car.name)">
-        <div class="car-description p-4">
-          <p class="lg-text fw-bold">{{car.name}}<p>
-          <div class="car-details">
+
+  <div class="row">
+    <div class="col-sm-6 col-lg-4 mb-3" *ngFor="let car of availableCars">
+      <div class="card">
+        <img class="card-img-top w-100" [alt]="car.name" [src]="carImage(car.name)">
+        <div class="card-body">
+          <p class="card-title lg-text fw-bold">{{car.name}}</p>
+          <div class="card-text">
             <p class="pe-3 me-3">{{car.seats}} locuri</p>
             <p class="pe-3 me-3">{{car.engine}}</p>
             <p class="pe-3 me-3">{{car.transmission}}</p>
-            <p class="me-auto fw-bold car-rent-price">{{car.rate | currency:'EUR':'symbol':'':'en-gb' }} / zi</p>
+            <p class="mb-0 fw-bold car-rent-price">{{car.rate | currency:'EUR':'symbol':'':'en-gb' }} / h</p>
           </div>
           <button type="button" class="btn btn-warning md-text" (click)="rentCar(car)">Inchiriaza</button>
         </div>
@@ -20,3 +21,4 @@
     </div>
   </div>
 </div>
+
